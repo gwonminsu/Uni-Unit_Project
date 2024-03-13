@@ -2520,6 +2520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4143206857852266712}
   - component: {fileID: 3219749673995411490}
+  - component: {fileID: -5576035636036881717}
   m_Layer: 5
   m_Name: Unit000
   m_TagString: Untagged
@@ -2570,6 +2571,27 @@ MonoBehaviour:
   UnitTypeChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &-5576035636036881717
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3932598942947494705}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.45, y: 0.45, z: 0.1}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &4192644502180060342
 GameObject:
   m_ObjectHideFlags: 0
