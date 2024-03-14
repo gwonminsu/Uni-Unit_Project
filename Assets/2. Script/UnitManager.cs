@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitManager : MonoBehaviour
 {
     private GameObject selectedUnit; // 현재 선택된 유닛
+    private Vector3 initialUnitPosition; // 유닛의 초기 위치
     private GridManager gridManager; // 그리드 매니저
 
     void Start()
@@ -31,6 +32,7 @@ public class UnitManager : MonoBehaviour
                 if (hitObject.CompareTag("Unit"))
                 {
                     SelectUnit(hitObject);
+                    initialUnitPosition = hitObject.transform.position; // 유닛의 초기 위치 저장
                 }
             }
         }
@@ -53,8 +55,17 @@ public class UnitManager : MonoBehaviour
         if (selectedUnit != null && Input.GetMouseButtonUp(0))
         {
             Vector3 nearestGridPoint = gridManager.GetNearestGridPoint(selectedUnit.transform.position);
-            selectedUnit.transform.position = nearestGridPoint;
-            Debug.Log("유닛이 가장 가까운 그리드 포인트로 이동함: " + nearestGridPoint);
+            // 유닛이 그리드 위에 있지 않으면 초기 위치로 되돌림
+            if (!IsValidGridPosition(nearestGridPoint))
+            {
+                selectedUnit.transform.position = initialUnitPosition;
+                Debug.Log("유닛이 가장 가까운 그리드 포인트로 이동함: " + nearestGridPoint);
+            }
+            else
+            {
+                selectedUnit.transform.position = nearestGridPoint;
+            }
+            Debug.Log("유닛이 이동함: " + selectedUnit.transform.position);
             selectedUnit = null; // 선택된 유닛 해제
         }
     }
@@ -64,5 +75,15 @@ public class UnitManager : MonoBehaviour
     {
         selectedUnit = unit;
         Debug.Log("선택된 유닛: " + selectedUnit.name);
+    }
+
+    // 그리드 위치가 유효한지 확인
+    private bool IsValidGridPosition(Vector3 position)
+    {
+        // 그리드의 범위를 넘어가는지 확인
+        return position.x >= -gridManager.gridSizeX / 2 * gridManager.tileSize &&
+               position.x < gridManager.gridSizeX / 2 * gridManager.tileSize &&
+               position.z >= -gridManager.gridSizeZ / 2 * gridManager.tileSize &&
+               position.z < gridManager.gridSizeZ / 2 * gridManager.tileSize;
     }
 }
