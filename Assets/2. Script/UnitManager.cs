@@ -7,6 +7,7 @@ public class UnitManager : MonoBehaviour
     private GameObject selectedUnit; // 현재 선택된 유닛
     private Vector3 initialUnitPosition; // 유닛의 초기 위치
     private GridManager gridManager; // 그리드 매니저
+    private Animator unitAnimator; // 유닛 애니메이터 참조
 
     void Start()
     {
@@ -33,6 +34,13 @@ public class UnitManager : MonoBehaviour
                 {
                     SelectUnit(hitObject);
                     initialUnitPosition = hitObject.transform.position; // 유닛의 초기 위치 저장
+                }
+
+                // 유닛이 선택되면 애니메이터 컴포넌트를 찾아서 저장
+                if (selectedUnit != null)
+                {
+                    unitAnimator = selectedUnit.transform.Find("UnitRoot").GetComponent<Animator>();
+                    unitAnimator.SetBool("isRunning", true); // 드래그 시작 시 Run 애니메이션으로 전환
                 }
             }
         }
@@ -66,6 +74,7 @@ public class UnitManager : MonoBehaviour
                 selectedUnit.transform.position = nearestGridPoint;
             }
             Debug.Log("유닛이 이동함: " + selectedUnit.transform.position);
+            unitAnimator.SetBool("isRunning", false); // 드래그 끝날 때 Idle 애니메이션으로 전환
             selectedUnit = null; // 선택된 유닛 해제
         }
     }
