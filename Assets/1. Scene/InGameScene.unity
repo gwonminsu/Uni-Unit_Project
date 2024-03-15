@@ -429,12 +429,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1101809386}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &75250678 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8961837092486893650, guid: 0103d37b832951941bae08881f626438,
-    type: 3}
-  m_PrefabInstance: {fileID: 1101809386}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &75250679
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -2568,22 +2562,6 @@ MonoBehaviour:
     cutoutTextureName: 
     DilateRenderingMode: 0
     cutoutTextureIndex: 0
-  - IsVisible: 1
-    CutoutMask: 8
-    edgeDilateAmount: 5
-    frontEdgeDilateAmount: 5
-    backEdgeDilateAmount: 5
-    renderer: {fileID: 2113872176}
-    SubmeshIndex: 0
-    BoundsMode: 0
-    Bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-    CutoutThreshold: 0.5
-    CullMode: 0
-    cutoutTextureName: 
-    DilateRenderingMode: 0
-    cutoutTextureIndex: 0
   - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
@@ -2798,22 +2776,6 @@ MonoBehaviour:
     frontEdgeDilateAmount: 5
     backEdgeDilateAmount: 5
     renderer: {fileID: 266750440}
-    SubmeshIndex: 0
-    BoundsMode: 0
-    Bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-    CutoutThreshold: 0.5
-    CullMode: 0
-    cutoutTextureName: 
-    DilateRenderingMode: 0
-    cutoutTextureIndex: 0
-  - IsVisible: 0
-    CutoutMask: 8
-    edgeDilateAmount: 5
-    frontEdgeDilateAmount: 5
-    backEdgeDilateAmount: 5
-    renderer: {fileID: 1498320666}
     SubmeshIndex: 0
     BoundsMode: 0
     Bounds:
@@ -3234,7 +3196,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1119336083}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &520934865
+--- !u!114 &520934869
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3682,22 +3644,6 @@ MonoBehaviour:
     cutoutTextureName: 
     DilateRenderingMode: 0
     cutoutTextureIndex: 0
-  - IsVisible: 1
-    CutoutMask: 8
-    edgeDilateAmount: 5
-    frontEdgeDilateAmount: 5
-    backEdgeDilateAmount: 5
-    renderer: {fileID: 622063763}
-    SubmeshIndex: 0
-    BoundsMode: 0
-    Bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-    CutoutThreshold: 0.5
-    CullMode: 0
-    cutoutTextureName: 
-    DilateRenderingMode: 0
-    cutoutTextureIndex: 0
   - IsVisible: 0
     CutoutMask: 8
     edgeDilateAmount: 5
@@ -3912,22 +3858,6 @@ MonoBehaviour:
     frontEdgeDilateAmount: 5
     backEdgeDilateAmount: 5
     renderer: {fileID: 1375948497}
-    SubmeshIndex: 0
-    BoundsMode: 0
-    Bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-    CutoutThreshold: 0.5
-    CullMode: 0
-    cutoutTextureName: 
-    DilateRenderingMode: 0
-    cutoutTextureIndex: 0
-  - IsVisible: 0
-    CutoutMask: 8
-    edgeDilateAmount: 5
-    frontEdgeDilateAmount: 5
-    backEdgeDilateAmount: 5
-    renderer: {fileID: 796511395}
     SubmeshIndex: 0
     BoundsMode: 0
     Bounds:
@@ -4365,12 +4295,6 @@ MonoBehaviour:
 --- !u!1 &622063761 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 504261257578539007, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1119336083}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &622063763 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 886380999049730747, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
     type: 3}
   m_PrefabInstance: {fileID: 1119336083}
   m_PrefabAsset: {fileID: 0}
@@ -5145,12 +5069,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1119336083}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &796511395 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6361536480878582649, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1119336083}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &796511396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5373,7 +5291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 1
-  renderingStrategy: 0
+  renderingStrategy: 1
   renderingMode: 0
   outlineLayerMask: -1
   primaryBufferSizeMode: 0
@@ -8436,6 +8354,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8439875583985150887, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8456952904932201026, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
         type: 3}
       propertyPath: m_Layer
@@ -8478,7 +8401,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3932598942947494705, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 520934865}
+      addedObject: {fileID: 520934869}
     - targetCorrespondingSourceObject: {fileID: 2753225676173406839, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
         type: 3}
       insertIndex: -1
@@ -9431,22 +9354,6 @@ MonoBehaviour:
     frontEdgeDilateAmount: 5
     backEdgeDilateAmount: 5
     renderer: {fileID: 1727168814}
-    SubmeshIndex: 0
-    BoundsMode: 0
-    Bounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-    CutoutThreshold: 0.5
-    CullMode: 0
-    cutoutTextureName: 
-    DilateRenderingMode: 0
-    cutoutTextureIndex: 0
-  - IsVisible: 1
-    CutoutMask: 8
-    edgeDilateAmount: 5
-    frontEdgeDilateAmount: 5
-    backEdgeDilateAmount: 5
-    renderer: {fileID: 75250678}
     SubmeshIndex: 0
     BoundsMode: 0
     Bounds:
@@ -10708,12 +10615,6 @@ MonoBehaviour:
 --- !u!1 &1498320664 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1309325755264481829, guid: 9fd48f50980567b4abd2cd58a374c5cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 1062195892}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &1498320666 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3172101695710398488, guid: 9fd48f50980567b4abd2cd58a374c5cf,
     type: 3}
   m_PrefabInstance: {fileID: 1062195892}
   m_PrefabAsset: {fileID: 0}
@@ -13101,12 +13002,6 @@ MonoBehaviour:
 --- !u!1 &2113872174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8117163268270480188, guid: 9fd48f50980567b4abd2cd58a374c5cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 1062195892}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &2113872176 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6321043543581962220, guid: 9fd48f50980567b4abd2cd58a374c5cf,
     type: 3}
   m_PrefabInstance: {fileID: 1062195892}
   m_PrefabAsset: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EPOOutline;
 
 public class UnitManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class UnitManager : MonoBehaviour
     private Vector3 initialUnitPosition; // 유닛의 초기 위치
     private GridManager gridManager; // 그리드 매니저
     private Animator unitAnimator; // 유닛 애니메이터 참조
+    private Outlinable selectedUnitOutlinable; // 선택된 유닛의 Outlinable 컴포넌트
 
     void Start()
     {
@@ -35,13 +37,6 @@ public class UnitManager : MonoBehaviour
                     SelectUnit(hitObject);
                     initialUnitPosition = hitObject.transform.position; // 유닛의 초기 위치 저장
                 }
-
-                // 유닛이 선택되면 애니메이터 컴포넌트를 찾아서 저장
-                if (selectedUnit != null)
-                {
-                    unitAnimator = selectedUnit.transform.Find("UnitRoot").GetComponent<Animator>();
-                    unitAnimator.SetBool("isRunning", true); // 드래그 시작 시 Run 애니메이션으로 전환
-                }
             }
         }
 
@@ -59,7 +54,7 @@ public class UnitManager : MonoBehaviour
             }
         }
 
-        // 드래그가 끝나면 가장 가까운 인덱싱된 타일로 유닛 이동
+        // 드래그가 끝나면
         if (selectedUnit != null && Input.GetMouseButtonUp(0))
         {
             Vector3 nearestGridPoint = gridManager.GetNearestGridPoint(selectedUnit.transform.position);
@@ -75,6 +70,13 @@ public class UnitManager : MonoBehaviour
             }
             Debug.Log("유닛이 이동함: " + selectedUnit.transform.position);
             unitAnimator.SetBool("isRunning", false); // 드래그 끝날 때 Idle 애니메이션으로 전환
+
+            // 아웃라인을 원래 색상으로 변경
+            if (selectedUnitOutlinable != null)
+            {
+                selectedUnitOutlinable.OutlineParameters.Color = Color.green;
+            }
+
             selectedUnit = null; // 선택된 유닛 해제
         }
     }
@@ -84,6 +86,15 @@ public class UnitManager : MonoBehaviour
     {
         selectedUnit = unit;
         Debug.Log("선택된 유닛: " + selectedUnit.name);
+
+        unitAnimator = selectedUnit.GetComponentInChildren<Animator>();
+        unitAnimator.SetBool("isRunning", true); // 드래그 시작 시 Run 애니메이션으로 전환
+
+        selectedUnitOutlinable = selectedUnit.GetComponent<Outlinable>(); // Outlinable 컴포넌트 가져오기
+        if (selectedUnitOutlinable != null)
+        {
+            selectedUnitOutlinable.OutlineParameters.Color = Color.white; // 아웃라인 색상을 하얀색으로 변경
+        }
     }
 
     // 그리드 위치가 유효한지 확인
@@ -96,3 +107,4 @@ public class UnitManager : MonoBehaviour
                position.z < gridManager.gridSizeZ / 2 * gridManager.tileSize;
     }
 }
+
