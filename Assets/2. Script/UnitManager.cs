@@ -6,105 +6,98 @@ using EPOOutline;
 public class UnitManager : MonoBehaviour
 {
     private GameObject selectedUnit; // 현재 선택된 유닛
-    private Vector3 initialUnitPosition; // 유닛의 초기 위치
-    private GridManager gridManager; // 그리드 매니저
-    private Animator unitAnimator; // 유닛 애니메이터 참조
-    private Outlinable selectedUnitOutlinable; // 선택된 유닛의 Outlinable 컴포넌트
+    private Vector3 initialUnitPosition; // 유닛이 선택되었을 때의 시작 위치
+    private GridManager gridManager; // 그리드 관리를 위한 참조
+    private Animator unitAnimator; // 유닛의 애니메이터 컴포넌트
+    private Outlinable selectedUnitOutlinable; // 유닛의 외곽선 처리를 위한 컴포넌트
 
     void Start()
     {
-        // 그리드 매니저 찾기
+        // 게임 시작 시 그리드 매니저를 찾아 참조 저장
         gridManager = FindObjectOfType<GridManager>();
     }
 
     void Update()
     {
-        // 마우스 왼쪽 버튼을 누르면
+        // 매 프레임마다 마우스 입력을 체크
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawLine(ray.origin, ray.origin + ray.direction * 100, Color.red, 2f); // 레이캐스트 시각화
 
-            // 마우스 클릭 위치에서 레이를 쏴서 충돌된 오브젝트를 확인
+            // 마우스 클릭 위치에서 레이캐스트 발사
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 GameObject hitObject = hit.collider.gameObject;
 
-                // 충돌된 오브젝트가 유닛이면 선택
+                // 레이캐스트가 유닛에 맞았을 경우, 그 유닛을 선택
                 if (hitObject.CompareTag("Unit"))
                 {
                     SelectUnit(hitObject);
-                    initialUnitPosition = hitObject.transform.position; // 유닛의 초기 위치 저장
                 }
             }
         }
 
-        // 선택된 유닛이 있고, 드래그 중이면
+        // 선택된 유닛이 있고 마우스 버튼이 눌려있으면, 드래그 처리
         if (selectedUnit != null && Input.GetMouseButton(0))
         {
-            // 마우스 커서 위치로 유닛 이동
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                Vector3 newPosition = hit.point;
-                newPosition.y = selectedUnit.transform.position.y; // 유닛의 원래 Y 위치 유지
-                selectedUnit.transform.position = newPosition;
-            }
+            DragUnit();
         }
 
-        // 드래그가 끝나면
+        // 마우스 버튼을 놓으면, 유닛을 해당 위치에 배치
         if (selectedUnit != null && Input.GetMouseButtonUp(0))
         {
-            Vector3 nearestGridPoint = gridManager.GetNearestGridPoint(selectedUnit.transform.position);
-            // 유닛이 그리드 위에 있지 않으면 초기 위치로 되돌림
-            if (!IsValidGridPosition(nearestGridPoint))
-            {
-                selectedUnit.transform.position = initialUnitPosition;
-                Debug.Log("유닛이 가장 가까운 그리드 포인트로 이동함: " + nearestGridPoint);
-            }
-            else
-            {
-                selectedUnit.transform.position = nearestGridPoint;
-            }
-            Debug.Log("유닛이 이동함: " + selectedUnit.transform.position);
-            unitAnimator.SetBool("isRunning", false); // 드래그 끝날 때 Idle 애니메이션으로 전환
-
-            // 아웃라인을 원래 색상으로 변경
-            if (selectedUnitOutlinable != null)
-            {
-                selectedUnitOutlinable.OutlineParameters.Color = Color.green;
-            }
-
-            selectedUnit = null; // 선택된 유닛 해제
+            PlaceUnit();
         }
     }
 
-    // 유닛 선택
     private void SelectUnit(GameObject unit)
     {
         selectedUnit = unit;
-        Debug.Log("선택된 유닛: " + selectedUnit.name);
+        initialUnitPosition = unit.transform.position;
+        unitAnimator = unit.GetComponentInChildren<Animator>();
+        unitAnimator.SetBool("isRunning", true);
+        selectedUnitOutlinable = selectedUnit.GetComponent<Outlinable>();
+        selectedUnitOutlinable.OutlineParameters.Color = Color.white;
+    }
 
-        unitAnimator = selectedUnit.GetComponentInChildren<Animator>();
-        unitAnimator.SetBool("isRunning", true); // 드래그 시작 시 Run 애니메이션으로 전환
+    private void DragUnit()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-        selectedUnitOutlinable = selectedUnit.GetComponent<Outlinable>(); // Outlinable 컴포넌트 가져오기
-        if (selectedUnitOutlinable != null)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            selectedUnitOutlinable.OutlineParameters.Color = Color.white; // 아웃라인 색상을 하얀색으로 변경
+            Vector3 newPosition = hit.point;
+            newPosition.y = selectedUnit.transform.position.y;
+            selectedUnit.transform.position = newPosition;
+
+            // 그리드 매니저를 통해 현재 위치가 유효한지 확인하고, 인디케이터를 업데이트
+            bool isValidPosition = gridManager.IsValidGridPosition(newPosition);
+            gridManager.UpdateIndicator(newPosition, isValidPosition);
         }
     }
 
-    // 그리드 위치가 유효한지 확인
-    private bool IsValidGridPosition(Vector3 position)
+    private void PlaceUnit()
     {
-        // 그리드의 범위를 넘어가는지 확인
-        return position.x >= -gridManager.gridSizeX / 2 * gridManager.tileSize &&
-               position.x < gridManager.gridSizeX / 2 * gridManager.tileSize &&
-               position.z >= -gridManager.gridSizeZ / 2 * gridManager.tileSize &&
-               position.z < gridManager.gridSizeZ / 2 * gridManager.tileSize;
+        Vector3 nearestGridPoint = gridManager.GetNearestGridPoint(selectedUnit.transform.position);
+        if (gridManager.IsValidGridPosition(nearestGridPoint))
+        {
+            gridManager.SetOccupied(initialUnitPosition, false); // 이전 위치의 점유 상태 해제
+
+            selectedUnit.transform.position = nearestGridPoint; // 새 위치로 이동
+
+            gridManager.SetOccupied(nearestGridPoint, true); // 새 위치의 점유 상태 설정
+        }
+        else
+        {
+            selectedUnit.transform.position = initialUnitPosition; // 유효하지 않은 위치면 원래 위치로
+            // 여기에 알림 표시 로직 추가 가능
+        }
+
+        unitAnimator.SetBool("isRunning", false);
+        selectedUnitOutlinable.OutlineParameters.Color = Color.green;
+        selectedUnit = null;
+        gridManager.ResetIndicators(); // 모든 인디케이터 초기화
     }
 }
-
