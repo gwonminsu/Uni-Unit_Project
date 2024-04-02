@@ -91,7 +91,7 @@ public class UnitManager : MonoBehaviour
             int xIndex_server = Mathf.FloorToInt(nearestGridPoint.x + 3.5f);
             int zIndex_server = 7 - Mathf.FloorToInt(nearestGridPoint.z + 3.5f);
 
-            Debug.Log("xIndex: " + xIndex_server + ", zIndex: " + zIndex_server + "로 이동되었음");
+            Debug.Log("유닛[" + selectedUnit.name + "](이)가 " + "xIndex: " + xIndex_server + ", zIndex: " + zIndex_server + "로 이동되었음");
 
             gridManager.SetOccupied(nearestGridPoint, true); // 새 위치의 점유 상태 설정
         }

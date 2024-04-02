@@ -146,4 +146,22 @@ public class GridManager : MonoBehaviour
 
         return nearestPoint;
     }
+
+    // 유효한 위치 반환 함수
+    public Vector3[] GetValidPositions()
+    {
+        List<Vector3> validPositions = new List<Vector3>();
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int z = 0; z < gridSizeZ; z++)
+            {
+                Vector3 position = new Vector3(x * tileSize + tileSize / 2 - gridSizeX * tileSize / 2, 0, z * tileSize + tileSize / 2 - gridSizeZ * tileSize / 2);
+                if (IsValidGridPosition(position))
+                {
+                    validPositions.Add(position);
+                }
+            }
+        }
+        return validPositions.ToArray();
+    }
 }
