@@ -87,6 +87,12 @@ public class UnitManager : MonoBehaviour
 
             selectedUnit.transform.position = nearestGridPoint; // 새 위치로 이동
 
+            // 그리드 인덱스를 서버 전송용 전통적인 2차원 배열 방식으로 변환
+            int xIndex_server = Mathf.FloorToInt(nearestGridPoint.x + 3.5f);
+            int zIndex_server = 7 - Mathf.FloorToInt(nearestGridPoint.z + 3.5f);
+
+            Debug.Log("xIndex: " + xIndex_server + ", zIndex: " + zIndex_server + "로 이동되었음");
+
             gridManager.SetOccupied(nearestGridPoint, true); // 새 위치의 점유 상태 설정
         }
         else

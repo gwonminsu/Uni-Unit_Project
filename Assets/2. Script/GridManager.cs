@@ -76,7 +76,13 @@ public class GridManager : MonoBehaviour
             ResetIndicators();
             GameObject indicatorTile = indicatorTiles[xIndex, zIndex];
             indicatorTile.SetActive(true);
+            // 유효한 위치라면 초록색, 아니면 빨간색으로 표시
             indicatorTile.GetComponent<Renderer>().material = valid ? indicatorValidMaterial : indicatorInvalidMaterial;
+        }
+        else
+        {
+            // 인덱스가 범위 밖에 있으면 인디케이터를 비활성화
+            ResetIndicators();
         }
     }
 
@@ -98,12 +104,22 @@ public class GridManager : MonoBehaviour
         int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
         int zIndex = Mathf.FloorToInt((position.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
 
+        // 그리드 범위 안에 있는지 확인
+        bool isInGridRange = xIndex >= 0 && xIndex < gridSizeX && zIndex >= 0 && zIndex < gridSizeZ;
+        if (!isInGridRange)
+        {
+            return false;
+        }
 
-        // Debug.Log("xIndex: " + xIndex + ", zIndex: " + zIndex);
+        // 아래쪽 그리드 영역에만 유닛을 놓을 수 있게 변경
+        bool isLowerHalf = zIndex < gridSizeZ / 2;
 
-        // 그리드 범위 안에 있는지, 해당 위치가 점유되지 않았는지 확인
-        return xIndex >= 0 && xIndex < gridSizeX && zIndex >= 0 && zIndex < gridSizeZ && !isOccupied[xIndex, zIndex];
+        // 해당 위치가 점유되지 않았는지 확인
+        bool isNotOccupied = !isOccupied[xIndex, zIndex];
+
+        return isLowerHalf && isNotOccupied;
     }
+
 
     // 그리드 위치의 점유 상태 설정
     public void SetOccupied(Vector3 position, bool occupied)
@@ -118,21 +134,6 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    // 선택된 그리드 위치에 하이라이트 적용
-    public void HighlightGrid(Vector3 gridPosition, bool isValid)
-    {
-        int xIndex = Mathf.FloorToInt((gridPosition.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
-        int zIndex = Mathf.FloorToInt((gridPosition.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
-
-        if (xIndex >= 0 && xIndex < gridSizeX && zIndex >= 0 && zIndex < gridSizeZ)
-        {
-            // 하이라이트 색상 설정
-            GameObject gridIndicator = gridTiles[xIndex, zIndex];
-            Color highlightColor = isValid ? Color.green : Color.red;
-            gridIndicator.GetComponent<MeshRenderer>().material.color = highlightColor;
-        }
-    }
-
     // 가장 가까운 그리드 포인트 반환
     public Vector3 GetNearestGridPoint(Vector3 position)
     {
@@ -140,8 +141,8 @@ public class GridManager : MonoBehaviour
         int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
         int zIndex = Mathf.FloorToInt((position.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
         Vector3 nearestPoint = new Vector3(xIndex * tileSize + tileSize / 2 - gridSizeX * tileSize / 2, position.y, zIndex * tileSize + tileSize / 2 - gridSizeZ * tileSize / 2);
-        
-        Debug.Log("xIndex: " + xIndex + ", zIndex: " + zIndex);
+
+        // Debug.Log("xIndex: " + xIndex + ", zIndex: " + zIndex);
 
         return nearestPoint;
     }
