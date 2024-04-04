@@ -5,9 +5,11 @@ using EPOOutline;
 
 public class UnitManager : MonoBehaviour
 {
+    public GameObject sellPrefab; // 유닛이 판매될 때 발생하는 효과
     private GameObject selectedUnit; // 현재 선택된 유닛
     private Vector3 initialUnitPosition; // 유닛이 선택되었을 때의 시작 위치
     private GridManager gridManager; // 그리드 관리를 위한 참조
+    private GameManager gameManager; // 게임 관리를 위한 참조
     private Animator unitAnimator; // 유닛의 애니메이터 컴포넌트
     private Outlinable selectedUnitOutlinable; // 유닛의 외곽선 처리를 위한 컴포넌트
 
@@ -15,6 +17,7 @@ public class UnitManager : MonoBehaviour
     {
         // 게임 시작 시 그리드 매니저를 찾아 참조 저장
         gridManager = FindObjectOfType<GridManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -76,34 +79,63 @@ public class UnitManager : MonoBehaviour
             bool isValidPosition = gridManager.IsValidGridPosition(newPosition);
             gridManager.UpdateIndicator(newPosition, isValidPosition);
         }
+        if (IsOutsideGrid(selectedUnit.transform.position))
+        {
+            selectedUnitOutlinable.OutlineParameters.Color = Color.yellow;
+        }
+        else
+        {
+            selectedUnitOutlinable.OutlineParameters.Color = Color.white;
+        }
     }
 
     private void PlaceUnit()
     {
-        Vector3 nearestGridPoint = gridManager.GetNearestGridPoint(selectedUnit.transform.position);
-        if (gridManager.IsValidGridPosition(nearestGridPoint))
+        if (IsOutsideGrid(selectedUnit.transform.position))
         {
-            gridManager.SetOccupied(initialUnitPosition, false); // 이전 위치의 점유 상태 해제
-
-            selectedUnit.transform.position = nearestGridPoint; // 새 위치로 이동
-
-            // 그리드 인덱스를 서버 전송용 전통적인 2차원 배열 방식으로 변환
-            int xIndex_server = Mathf.FloorToInt(nearestGridPoint.x + 3.5f);
-            int zIndex_server = 7 - Mathf.FloorToInt(nearestGridPoint.z + 3.5f);
-
-            Debug.Log("유닛[" + selectedUnit.name + "](이)가 " + "xIndex: " + xIndex_server + ", zIndex: " + zIndex_server + "로 이동되었음");
-
-            gridManager.SetOccupied(nearestGridPoint, true); // 새 위치의 점유 상태 설정
+            SellUnit();
         }
         else
         {
-            selectedUnit.transform.position = initialUnitPosition; // 유효하지 않은 위치면 원래 위치로
-            // 여기에 알림 표시 로직 추가 가능
+            Vector3 nearestGridPoint = gridManager.GetNearestGridPoint(selectedUnit.transform.position);
+            if (gridManager.IsValidGridPosition(nearestGridPoint))
+            {
+                gridManager.SetOccupied(initialUnitPosition, false); // 이전 위치의 점유 상태 해제
+
+                selectedUnit.transform.position = nearestGridPoint; // 새 위치로 이동
+
+                // 그리드 인덱스를 서버 전송용 전통적인 2차원 배열 방식으로 변환
+                int xIndex_server = Mathf.FloorToInt(nearestGridPoint.x + 3.5f);
+                int zIndex_server = 7 - Mathf.FloorToInt(nearestGridPoint.z + 3.5f);
+
+                Debug.Log("유닛[" + selectedUnit.name + "](이)가 " + "xIndex: " + xIndex_server + ", zIndex: " + zIndex_server + "로 이동되었음");
+
+                gridManager.SetOccupied(nearestGridPoint, true); // 새 위치의 점유 상태 설정
+            }
+            else
+            {
+                selectedUnit.transform.position = initialUnitPosition; // 유효하지 않은 위치면 원래 위치로
+                                                                       // 여기에 알림 표시 로직 추가 가능
+            }
         }
+        
 
         unitAnimator.SetBool("isRunning", false);
         selectedUnitOutlinable.OutlineParameters.Color = Color.green;
         selectedUnit = null;
         gridManager.ResetIndicators(); // 모든 인디케이터 초기화
+    }
+
+    private bool IsOutsideGrid(Vector3 position)
+    {
+        // 그리드 바깥인지 확인
+        return !gridManager.IsValidGridPosition(position) && !gridManager.IsInGridBounds(position);
+    }
+
+    private void SellUnit()
+    {
+        gameManager.UpdateGold(1); // 골드 증가
+        Instantiate(sellPrefab, selectedUnit.transform.position, Quaternion.identity); // FX 효과 생성
+        Destroy(selectedUnit); // 유닛 제거
     }
 }

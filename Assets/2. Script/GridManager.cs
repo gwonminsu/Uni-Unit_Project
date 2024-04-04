@@ -120,6 +120,16 @@ public class GridManager : MonoBehaviour
         return isLowerHalf && isNotOccupied;
     }
 
+    // 그리드 범위 내에 있는지 확인
+    public bool IsInGridBounds(Vector3 position)
+    {
+        int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
+        int zIndex = Mathf.FloorToInt((position.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
+
+        // 위치가 그리드 경계 내에 있는지 확인
+        return xIndex >= 0 && xIndex < gridSizeX && zIndex >= 0 && zIndex < gridSizeZ;
+    }
+
 
     // 그리드 위치의 점유 상태 설정
     public void SetOccupied(Vector3 position, bool occupied)

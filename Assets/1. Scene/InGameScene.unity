@@ -12631,6 +12631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9388f806531057540a03f66577e19db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sellPrefab: {fileID: 143964, guid: 1049ae0ece7bfe54aae0e362e00b1630, type: 3}
 --- !u!1 &1855966059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5652348303417553901, guid: 9fd48f50980567b4abd2cd58a374c5cf,

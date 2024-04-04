@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 719853964624155576, guid: 4e7153023f7cf3340a7d3967b751c7d1,
         type: 3}
       propertyPath: m_Name
-      value: Sample_Unit04
+      value: Basic_Unit
       objectReference: {fileID: 0}
     - target: {fileID: 719853964624155576, guid: 4e7153023f7cf3340a7d3967b751c7d1,
         type: 3}
@@ -1683,7 +1683,7 @@ MonoBehaviour:
   renderStyle: 1
   outlineParameters:
     enabled: 1
-    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    color: {r: 0.015686274, g: 0.31725308, b: 1, a: 1}
     dilateShift: 1
     blurShift: 1
     fillPass:
