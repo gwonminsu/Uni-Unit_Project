@@ -6,6 +6,7 @@ using EPOOutline;
 public class UnitManager : MonoBehaviour
 {
     public GameObject sellPrefab; // 유닛이 판매될 때 발생하는 효과
+    private AudioSource coinBlast; // 판매 효과음
     private GameObject selectedUnit; // 현재 선택된 유닛
     private Vector3 initialUnitPosition; // 유닛이 선택되었을 때의 시작 위치
     private GridManager gridManager; // 그리드 관리를 위한 참조
@@ -15,6 +16,7 @@ public class UnitManager : MonoBehaviour
 
     void Start()
     {
+        coinBlast = GetComponent<AudioSource>();
         // 게임 시작 시 그리드 매니저를 찾아 참조 저장
         gridManager = FindObjectOfType<GridManager>();
         gameManager = FindObjectOfType<GameManager>();
@@ -137,5 +139,11 @@ public class UnitManager : MonoBehaviour
         gameManager.UpdateGold(1); // 골드 증가
         Instantiate(sellPrefab, selectedUnit.transform.position, Quaternion.identity); // FX 효과 생성
         Destroy(selectedUnit); // 유닛 제거
+
+        // 효과음 재생
+        if (coinBlast != null)
+        {
+            coinBlast.Play();
+        }
     }
 }
