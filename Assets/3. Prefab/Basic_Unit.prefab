@@ -479,6 +479,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 719853964624155576, guid: 4e7153023f7cf3340a7d3967b751c7d1,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: -2900075347019854}
+    - targetCorrespondingSourceObject: {fileID: 719853964624155576, guid: 4e7153023f7cf3340a7d3967b751c7d1,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 463754571116855431}
     - targetCorrespondingSourceObject: {fileID: 869682313777443522, guid: 4e7153023f7cf3340a7d3967b751c7d1,
         type: 3}
@@ -1232,6 +1236,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.45, y: 0.45, z: 0.1}
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!114 &-2900075347019854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640823171686703528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacfb1af70480a246878fd26096d09df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: 
+  health: 0
+  attack: 0
+  movementItem: {fileID: 0}
+  attackItem: {fileID: 0}
+  specialItem: {fileID: 0}
 --- !u!114 &463754571116855431
 MonoBehaviour:
   m_ObjectHideFlags: 0

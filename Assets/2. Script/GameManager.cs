@@ -7,9 +7,12 @@ public class GameManager : MonoBehaviour
 {
     public int gold = 10; // 플레이어의 시작 골드
     public GameObject unitPrefab; // 구매할 유닛의 프리팹
+    public GameObject uiPrefab; // 유닛 ui 프리팹
     public TextMeshProUGUI goldText; // 골드를 표시할 TextMeshProUGUI
 
     private GridManager gridManager;
+
+    public static int unitIdCounter = 1; // 유닛 ID 카운터
 
     void Start()
     {
@@ -42,7 +45,10 @@ public class GameManager : MonoBehaviour
                 spawnPosition.y = 2.56f;
                 Quaternion spawnRotation = Quaternion.Euler(85, 0, 0);
 
-                Instantiate(unitPrefab, spawnPosition, spawnRotation);
+                GameObject newUnit = Instantiate(unitPrefab, spawnPosition, spawnRotation);
+                GameObject unitUI = Instantiate(uiPrefab, newUnit.transform);
+                unitUI.transform.localPosition = new Vector3(0, 0, 0);
+                newUnit.name = "Unit_" + unitIdCounter++; // 유닛에 고유 이름 부여
                 UpdateGold(-2); // 골드 차감
 
                 // 그리드 위치 점유
