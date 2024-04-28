@@ -1,0 +1,32 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/10.%20UI/Uss/LoginStyle.uss?fileID=7433441132597879392&amp;guid=0358e781ac831cd48922dec65cf872a6&amp;type=3#LoginStyle" />
+    <Style src="project://database/Assets/10.%20UI/Uss/hintText.uss?fileID=7433441132597879392&amp;guid=d3663ecd465544a4babf730a49a195b9&amp;type=3#hintText" />
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/4.%20Image/TitleBack.png?fileID=2800000&amp;guid=19834d02da5212946882840c9cfa83ab&amp;type=3#TitleBack&quot;); justify-content: space-around; align-self: auto;">
+        <ui:VisualElement name="LoginButton" style="flex-grow: 1; width: 30%; opacity: 1; height: auto; align-self: center; justify-content: center; align-items: auto; flex-direction: row; padding-top: 100px; flex-wrap: nowrap; flex-shrink: 1; padding-bottom: 50px; position: relative;">
+            <ui:Button text="로그인" parse-escape-sequences="true" display-tooltip-when-elided="true" name="openLoginScreen-btn" class="login-button" style="justify-content: flex-start; align-self: auto;" />
+            <ui:Button text="회원가입" parse-escape-sequences="true" display-tooltip-when-elided="true" name="openJoinScreen-btn" enable-rich-text="true" class="login-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="LoginScreen" style="flex-grow: 1; position: absolute; width: 50%; height: 385px; justify-content: flex-start; top: 28px; left: 209px; background-color: rgb(255, 255, 255); align-items: center; align-self: center; display: none;">
+            <ui:Label tabindex="-1" text="로그인" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; top: 17px; left: 123px; width: 159px; -unity-text-align: upper-center;" />
+            <ui:VisualElement style="flex-grow: 1; flex-direction: column; justify-content: center; align-self: center; width: 50%; padding-top: 100px; display: flex;">
+                <ui:TextField picking-mode="Ignore" value="아이디" hide-mobile-input="false" is-delayed="false" max-length="10" tabindex="0" name="username" usage-hints="None" class="hintText" style="flex-direction: column; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; text-overflow: ellipsis; color: rgba(27, 27, 27, 0.31);" />
+                <ui:TextField picking-mode="Ignore" value="패스워드" hide-mobile-input="false" is-delayed="false" max-length="10" tabindex="0" name="password" readonly="false" password="true" class="hintText" style="flex-direction: column; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; color: rgba(27, 27, 27, 0.31);" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; padding-top: 0;">
+                <ui:Button text="로그인" parse-escape-sequences="true" display-tooltip-when-elided="true" name="login-btn" enable-rich-text="false" class="login-button" />
+            </ui:VisualElement>
+            <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="closeLogin-btn" style="position: absolute; top: -2px; left: 374px; width: 26px; height: 25px; background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="JoinScreen" style="flex-grow: 1; position: absolute; width: 50%; height: 385px; justify-content: flex-start; top: 28px; left: 209px; background-color: rgb(255, 255, 255); align-items: center; align-self: center; display: none;">
+            <ui:Label tabindex="-1" text="회원가입" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; top: 17px; left: 123px; width: 159px; -unity-text-align: upper-center;" />
+            <ui:VisualElement style="flex-grow: 1; flex-direction: column; justify-content: center; align-self: center; width: 50%; padding-top: 100px;">
+                <ui:TextField picking-mode="Ignore" value="아이디" hide-mobile-input="false" is-delayed="false" max-length="10" tabindex="0" name="joinusername" class="hintText" style="flex-direction: column; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; color: rgba(27, 27, 27, 0.31);" />
+                <ui:TextField picking-mode="Ignore" value="패스워드" hide-mobile-input="false" is-delayed="false" max-length="10" tabindex="0" name="joinpassword" readonly="false" class="hintText" style="flex-direction: column; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; color: rgba(27, 27, 27, 0.31);" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; padding-top: 0;">
+                <ui:Button text="회원가입" parse-escape-sequences="true" display-tooltip-when-elided="true" name="join-btn" enable-rich-text="false" class="login-button" />
+            </ui:VisualElement>
+            <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="closeJoin-btn" style="position: absolute; top: -2px; left: 374px; width: 26px; height: 25px; background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

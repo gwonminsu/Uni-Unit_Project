@@ -1,0 +1,4 @@
+.hintText {
+    color: rgba(27, 27, 27, 0.31);
+    -unity-font-style: italic;
+}

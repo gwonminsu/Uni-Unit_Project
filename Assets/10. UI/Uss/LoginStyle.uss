@@ -1,0 +1,15 @@
+.login-button {
+    font-size: 16px;
+    color: white;
+    background: linear-gradient(45deg, rgb(254, 107, 139) 30%, rgb(255, 142, 83) 90%);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 9px rgb(153, 153, 153);
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    background-color: rgba(53, 38, 38, 0.72);
+}
