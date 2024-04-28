@@ -54,11 +54,12 @@ public class GameManager : MonoBehaviour
                 GameObject newUnit = Instantiate(unitPrefab, spawnPosition, spawnRotation);
                 GameObject unitUI = Instantiate(uiPrefab, newUnit.transform);
 
+                Debug.Log("유닛이 (" + xIndex_server + ", " + zIndex_server + ") 좌표에 소환됨");
+
                 Unit unit = newUnit.GetComponent<Unit>();
                 if (unit != null) // 유닛 정보 관리하는 컴포넌트의 좌표값 전송
                 {
-                    unit.xIndex = xIndex_server;
-                    unit.zIndex = zIndex_server;
+                    unit.InitializeUnit(xIndex_server, zIndex_server);
                 }
 
                 unitUI.transform.localPosition = new Vector3(0, 0, 0);

@@ -12,14 +12,16 @@ public class Unit : MonoBehaviour
     public float defence = 0; // 유닛이 공격을 받을 때 데미지를 줄여줄 수 있는 값
     public float avoid = 0; // 유닛이 공격을 받을 때 공격을 회피 할 수 있는 확률
     public string current_state = "idle"; // 유닛의 현재 상태 (ex - 기절, 중독 등등)
-    public int xIndex; // 유닛의 현재 x좌표
-    public int zIndex; // 유닛의 현재 z좌표
+    [SerializeField] private int _xIndex; // 유닛의 현재 x좌표
+    [SerializeField] private int _zIndex; // 유닛의 현재 z좌표
 
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI healthText;
 
     private int lastHealth;
     private int lastAttack;
+    private int _lastXIndex;
+    private int _lastZIndex;
 
     public GameObject movementItem;
     public GameObject attackItem;
@@ -35,6 +37,38 @@ public class Unit : MonoBehaviour
     {
         get => _attack;
         set => _attack = value;
+    }
+
+    public int xIndex
+    {
+        get => _xIndex;
+        set
+        {
+            lastXIndex = _xIndex; // 변경 전 값 저장
+            _xIndex = value;
+        }
+    }
+
+    public int zIndex
+    {
+        get => _zIndex;
+        set
+        {
+            lastZIndex = _zIndex; // 변경 전 값 저장
+            _zIndex = value;
+        }
+    }
+
+    public int lastXIndex
+    {
+        get { return _lastXIndex; }
+        set { _lastXIndex = value; }
+    }
+
+    public int lastZIndex
+    {
+        get { return _lastZIndex; }
+        set { _lastZIndex = value; }
     }
 
     void Start()
@@ -62,8 +96,23 @@ public class Unit : MonoBehaviour
             lastHealth = _health;
             lastAttack = _attack;
         }
+
+        if (lastXIndex != _xIndex || lastZIndex != _zIndex)
+        {
+            UnitManager.instance.MoveUnit(this, _xIndex, _zIndex);
+            lastXIndex = _xIndex;
+            lastZIndex = _zIndex;
+        }
     }
 
+    public void InitializeUnit(int x, int z)
+    {
+        _xIndex = x;
+        _zIndex = z;
+        lastXIndex = x;
+        lastZIndex = z;
+        UpdateStatsDisplay();
+    }
 
     void UpdateStatsDisplay()
     {

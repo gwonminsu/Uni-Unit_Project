@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EPOOutline;
+using DG.Tweening;
 
 public class UnitManager : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class UnitManager : MonoBehaviour
     private GameManager gameManager; // 게임 관리를 위한 참조
     private Animator unitAnimator; // 유닛의 애니메이터 컴포넌트
     private Outlinable selectedUnitOutlinable; // 유닛의 외곽선 처리를 위한 컴포넌트
+
+    public static UnitManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -123,7 +131,6 @@ public class UnitManager : MonoBehaviour
             else
             {
                 selectedUnit.transform.position = initialUnitPosition; // 유효하지 않은 위치면 원래 위치로
-                                                                       // 여기에 알림 표시 로직 추가 가능
             }
         }
         
@@ -134,12 +141,53 @@ public class UnitManager : MonoBehaviour
         gridManager.ResetIndicators(); // 모든 인디케이터 초기화
     }
 
+    public void MoveUnit(Unit unit, int xIndex, int zIndex)
+    {
+        Vector3 targetPosition = unit.transform.position; // 변경할 유닛 위치
+        Vector3 initailTargetPosition = unit.transform.position; // 유닛의 초기 위치
+        targetPosition.x = (xIndex - 3.5f); // unit.cs의 변경된 xIndex의 실제 위치로 세팅
+        targetPosition.z = (7 - zIndex - 3.5f); // 마찬가지
+
+        // 그리드 바깥이면 유닛 판매
+        if (IsOutsideGrid(targetPosition))
+        {
+            SellUnit(unit);
+        }
+        else
+        {
+            if (gridManager.IsValidGridPosition(targetPosition))
+            {
+                // 이동 가능하면 실제 유닛 위치 업데이트, DOTween을 사용하여 새 위치로 부드럽게 이동
+                unit.transform.DOMove(targetPosition, 0.5f) // 이동 시간 0.5초
+                    .SetEase(Ease.OutBack) // Bounce 효과 적용
+                    .OnStart(() => {
+                        gridManager.SetOccupied(unit.transform.position, false); // 현재 위치 점유 해제
+                    })
+                    .OnComplete(() => {
+                        gridManager.SetOccupied(targetPosition, true); // 새 위치 점유
+                        unit.xIndex = xIndex;
+                        unit.zIndex = zIndex;
+                    });
+            }
+            else
+            {
+                // 이미 점유된 위치면 로그 출력하고 원래 위치로
+                Debug.Log("이미 점유된 위치입니다.");
+                unit.transform.position = initailTargetPosition;
+                unit.xIndex = unit.lastXIndex; // 이전 xIndex로 복원
+                unit.zIndex = unit.lastZIndex; // 이전 zIndex로 복원
+            }
+        }
+    }
+
+
     private bool IsOutsideGrid(Vector3 position)
     {
         // 그리드 바깥인지 확인
         return !gridManager.IsValidGridPosition(position) && !gridManager.IsInGridBounds(position);
     }
 
+    // 드래그로 선택한 유닛 판매
     private void SellUnit()
     {
         gameManager.UpdateGold(1); // 골드 증가
@@ -147,6 +195,18 @@ public class UnitManager : MonoBehaviour
         Destroy(selectedUnit); // 유닛 제거
 
         // 효과음 재생
+        if (coinBlast != null)
+        {
+            coinBlast.Play();
+        }
+    }
+
+    // 특정 유닛 판매
+    private void SellUnit(Unit unit)
+    {
+        gameManager.UpdateGold(unit.price);
+        Instantiate(sellPrefab, unit.transform.position, Quaternion.identity);
+        Destroy(unit.gameObject);
         if (coinBlast != null)
         {
             coinBlast.Play();
