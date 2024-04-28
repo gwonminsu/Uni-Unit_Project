@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -39,6 +40,11 @@ public class GameManager : MonoBehaviour
         if (gold >= 2) // 유닛 구매 비용 체크
         {
             Vector3 spawnPosition = GetRandomValidPosition();
+
+            // 그리드 인덱스를 서버 전송용 전통적인 2차원 배열 방식으로 변환
+            int xIndex_server = Mathf.FloorToInt(spawnPosition.x + 3.5f);
+            int zIndex_server = 7 - Mathf.FloorToInt(spawnPosition.z + 3.5f);
+
             if (spawnPosition != Vector3.zero) // 유효한 위치인 경우
             {
                 // Y 좌표와 회전값을 조정
@@ -47,6 +53,14 @@ public class GameManager : MonoBehaviour
 
                 GameObject newUnit = Instantiate(unitPrefab, spawnPosition, spawnRotation);
                 GameObject unitUI = Instantiate(uiPrefab, newUnit.transform);
+
+                Unit unit = newUnit.GetComponent<Unit>();
+                if (unit != null) // 유닛 정보 관리하는 컴포넌트의 좌표값 전송
+                {
+                    unit.xIndex = xIndex_server;
+                    unit.zIndex = zIndex_server;
+                }
+
                 unitUI.transform.localPosition = new Vector3(0, 0, 0);
                 newUnit.name = "Unit_" + unitIdCounter++; // 유닛에 고유 이름 부여
                 UpdateGold(-2); // 골드 차감
