@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EPOOutline;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class UnitManager : MonoBehaviour
 {
@@ -190,7 +191,8 @@ public class UnitManager : MonoBehaviour
     // 드래그로 선택한 유닛 판매
     private void SellUnit()
     {
-        gameManager.UpdateGold(1); // 골드 증가
+        Unit unit_info = selectedUnit.GetComponent<Unit>();
+        gameManager.UpdateGold(unit_info.price); // 골드 증가
         Instantiate(sellPrefab, selectedUnit.transform.position, Quaternion.identity); // FX 효과 생성
         Destroy(selectedUnit); // 유닛 제거
 
