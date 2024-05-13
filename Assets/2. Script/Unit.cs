@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public string unitName = "BasicUnit"; // UI ÇÁ·¹ÀÓ¿¡ Ç¥½Ã µÉ À¯´Ö ÀÌ¸§ (ÃßÈÄ Æ¯¼ö Æ¯¼º ¾ÆÀÌÅÛ¿¡ ÀÇÇØ ÀÌ¸§ÀÌ º¯°æµÉ ¿¹Á¤)
-    [SerializeField] private int _health = 1; // Ã¼·Â
-    [SerializeField] private int _attack = 1; // °ø°İ·Â
-    public int price = 1; // À¯´Ö ÆÇ¸Å ±İ¾×
-    public float defence = 0; // À¯´ÖÀÌ °ø°İÀ» ¹ŞÀ» ¶§ µ¥¹ÌÁö¸¦ ÁÙ¿©ÁÙ ¼ö ÀÖ´Â °ª
-    public float avoid = 0; // À¯´ÖÀÌ °ø°İÀ» ¹ŞÀ» ¶§ °ø°İÀ» È¸ÇÇ ÇÒ ¼ö ÀÖ´Â È®·ü
-    public string current_state = "idle"; // À¯´ÖÀÇ ÇöÀç »óÅÂ (ex - ±âÀı, Áßµ¶ µîµî)
-    [SerializeField] private int _xIndex; // À¯´ÖÀÇ ÇöÀç xÁÂÇ¥
-    [SerializeField] private int _zIndex; // À¯´ÖÀÇ ÇöÀç zÁÂÇ¥
+    public string unitName = "BasicUnit"; // UI í”„ë ˆì„ì— í‘œì‹œ ë  ìœ ë‹› ì´ë¦„ (ì¶”í›„ íŠ¹ìˆ˜ íŠ¹ì„± ì•„ì´í…œì— ì˜í•´ ì´ë¦„ì´ ë³€ê²½ë  ì˜ˆì •)
+    [SerializeField] private int _health = 1; // ì²´ë ¥
+    [SerializeField] private int _attack = 1; // ê³µê²©ë ¥
+    public int price = 1; // ìœ ë‹› íŒë§¤ ê¸ˆì•¡
+    public float defence = 0; // ìœ ë‹›ì´ ê³µê²©ì„ ë°›ì„ ë•Œ ë°ë¯¸ì§€ë¥¼ ì¤„ì—¬ì¤„ ìˆ˜ ìˆëŠ” ê°’
+    public float avoid = 0; // ìœ ë‹›ì´ ê³µê²©ì„ ë°›ì„ ë•Œ ê³µê²©ì„ íšŒí”¼ í•  ìˆ˜ ìˆëŠ” í™•ë¥ 
+    public string current_state = "idle"; // ìœ ë‹›ì˜ í˜„ì¬ ìƒíƒœ (ex - ê¸°ì ˆ, ì¤‘ë… ë“±ë“±)
+    [SerializeField] private int _xIndex; // ìœ ë‹›ì˜ í˜„ì¬ xì¢Œí‘œ
+    [SerializeField] private int _zIndex; // ìœ ë‹›ì˜ í˜„ì¬ zì¢Œí‘œ
 
     public SkillItem attackSkill;
     public SkillItem moveSkill;
@@ -68,7 +68,7 @@ public class Unit : MonoBehaviour
     public int Health
     {
         get => _health;
-        set => _health = value;
+        set => _health = Mathf.Max(0, value); // ì²´ë ¥ì´ 0 ì´í•˜ë¡œ ë–¨ì–´ì§€ì§€ ì•Šë„ë¡
     }
 
     public int Attack
@@ -77,22 +77,22 @@ public class Unit : MonoBehaviour
         set => _attack = value;
     }
 
-    public int xIndex
+    public int XIndex
     {
         get => _xIndex;
         set
         {
-            lastXIndex = _xIndex; // º¯°æ Àü °ª ÀúÀå
+            lastXIndex = _xIndex; // ë³€ê²½ ì „ ê°’ ì €ì¥
             _xIndex = value;
         }
     }
 
-    public int zIndex
+    public int ZIndex
     {
         get => _zIndex;
         set
         {
-            lastZIndex = _zIndex; // º¯°æ Àü °ª ÀúÀå
+            lastZIndex = _zIndex; // ë³€ê²½ ì „ ê°’ ì €ì¥
             _zIndex = value;
         }
     }
@@ -123,7 +123,7 @@ public class Unit : MonoBehaviour
                 healthText = text;
             }
         }
-        UpdateStatsDisplay(); // ÃÊ±â »óÅÂ¸¦ UI¿¡ ¹İ¿µ
+        UpdateStatsDisplay(); // ì´ˆê¸° ìƒíƒœë¥¼ UIì— ë°˜ì˜
     }
 
     void Update()
@@ -158,7 +158,7 @@ public class Unit : MonoBehaviour
         if (healthText != null) healthText.text = _health.ToString();
     }
 
-    // À¯´ÖÀÇ Çàµ¿À» Á¤ÀÇÇÏ´Â ¸Ş¼­µåµé
+    // ìœ ë‹›ì˜ í–‰ë™ì„ ì •ì˜í•˜ëŠ” ë©”ì„œë“œë“¤
     public void UseSkill(SkillItem skill)
     {
         FindObjectOfType<SkillManager>().ActivateSkill(this, skill);
@@ -166,16 +166,16 @@ public class Unit : MonoBehaviour
 
     public void Move()
     {
-        // ÀÌµ¿ ·ÎÁ÷ ±¸Çö
+        // ì´ë™ ë¡œì§ êµ¬í˜„
     }
 
     public void PerformAttack()
     {
-        // °ø°İ ·ÎÁ÷ ±¸Çö
+        // ê³µê²© ë¡œì§ êµ¬í˜„
     }
 
     public void UseItem()
     {
-        // ¾ÆÀÌÅÛ »ç¿ë ·ÎÁ÷ ±¸Çö
+        // ì•„ì´í…œ ì‚¬ìš© ë¡œì§ êµ¬í˜„
     }
 }

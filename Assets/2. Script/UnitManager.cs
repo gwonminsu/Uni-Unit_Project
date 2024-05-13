@@ -7,14 +7,14 @@ using Unity.VisualScripting;
 
 public class UnitManager : MonoBehaviour
 {
-    public GameObject sellPrefab; // À¯´ÖÀÌ ÆÇ¸ÅµÉ ¶§ ¹ß»ıÇÏ´Â È¿°ú
-    private AudioSource coinBlast; // ÆÇ¸Å È¿°úÀ½
-    private GameObject selectedUnit; // ÇöÀç ¼±ÅÃµÈ À¯´Ö
-    private Vector3 initialUnitPosition; // À¯´ÖÀÌ ¼±ÅÃµÇ¾úÀ» ¶§ÀÇ ½ÃÀÛ À§Ä¡
-    private GridManager gridManager; // ±×¸®µå °ü¸®¸¦ À§ÇÑ ÂüÁ¶
-    private GameManager gameManager; // °ÔÀÓ °ü¸®¸¦ À§ÇÑ ÂüÁ¶
-    private Animator unitAnimator; // À¯´ÖÀÇ ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ®
-    private Outlinable selectedUnitOutlinable; // À¯´ÖÀÇ ¿Ü°û¼± Ã³¸®¸¦ À§ÇÑ ÄÄÆ÷³ÍÆ®
+    public GameObject sellPrefab; // ìœ ë‹›ì´ íŒë§¤ë  ë•Œ ë°œìƒí•˜ëŠ” íš¨ê³¼
+    private AudioSource coinBlast; // íŒë§¤ íš¨ê³¼ìŒ
+    private GameObject selectedUnit; // í˜„ì¬ ì„ íƒëœ ìœ ë‹›
+    private Vector3 initialUnitPosition; // ìœ ë‹›ì´ ì„ íƒë˜ì—ˆì„ ë•Œì˜ ì‹œì‘ ìœ„ì¹˜
+    private GridManager gridManager; // ê·¸ë¦¬ë“œ ê´€ë¦¬ë¥¼ ìœ„í•œ ì°¸ì¡°
+    private GameManager gameManager; // ê²Œì„ ê´€ë¦¬ë¥¼ ìœ„í•œ ì°¸ì¡°
+    private Animator unitAnimator; // ìœ ë‹›ì˜ ì• ë‹ˆë©”ì´í„° ì»´í¬ë„ŒíŠ¸
+    private Outlinable selectedUnitOutlinable; // ìœ ë‹›ì˜ ì™¸ê³½ì„  ì²˜ë¦¬ë¥¼ ìœ„í•œ ì»´í¬ë„ŒíŠ¸
 
     public static UnitManager instance;
 
@@ -26,25 +26,25 @@ public class UnitManager : MonoBehaviour
     void Start()
     {
         coinBlast = GetComponent<AudioSource>();
-        // °ÔÀÓ ½ÃÀÛ ½Ã ±×¸®µå ¸Å´ÏÀú¸¦ Ã£¾Æ ÂüÁ¶ ÀúÀå
+        // ê²Œì„ ì‹œì‘ ì‹œ ê·¸ë¦¬ë“œ ë§¤ë‹ˆì €ë¥¼ ì°¾ì•„ ì°¸ì¡° ì €ì¥
         gridManager = FindObjectOfType<GridManager>();
         gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
     {
-        // ¸Å ÇÁ·¹ÀÓ¸¶´Ù ¸¶¿ì½º ÀÔ·ÂÀ» Ã¼Å©
+        // ë§¤ í”„ë ˆì„ë§ˆë‹¤ ë§ˆìš°ìŠ¤ ì…ë ¥ì„ ì²´í¬
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            // ¸¶¿ì½º Å¬¸¯ À§Ä¡¿¡¼­ ·¹ÀÌÄ³½ºÆ® ¹ß»ç
+            // ë§ˆìš°ìŠ¤ í´ë¦­ ìœ„ì¹˜ì—ì„œ ë ˆì´ìºìŠ¤íŠ¸ ë°œì‚¬
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 GameObject hitObject = hit.collider.gameObject;
 
-                // ·¹ÀÌÄ³½ºÆ®°¡ À¯´Ö¿¡ ¸Â¾ÒÀ» °æ¿ì, ±× À¯´ÖÀ» ¼±ÅÃ
+                // ë ˆì´ìºìŠ¤íŠ¸ê°€ ìœ ë‹›ì— ë§ì•˜ì„ ê²½ìš°, ê·¸ ìœ ë‹›ì„ ì„ íƒ
                 if (hitObject.CompareTag("Unit"))
                 {
                     SelectUnit(hitObject);
@@ -52,13 +52,13 @@ public class UnitManager : MonoBehaviour
             }
         }
 
-        // ¼±ÅÃµÈ À¯´ÖÀÌ ÀÖ°í ¸¶¿ì½º ¹öÆ°ÀÌ ´­·ÁÀÖÀ¸¸é, µå·¡±× Ã³¸®
+        // ì„ íƒëœ ìœ ë‹›ì´ ìˆê³  ë§ˆìš°ìŠ¤ ë²„íŠ¼ì´ ëˆŒë ¤ìˆìœ¼ë©´, ë“œë˜ê·¸ ì²˜ë¦¬
         if (selectedUnit != null && Input.GetMouseButton(0))
         {
             DragUnit();
         }
 
-        // ¸¶¿ì½º ¹öÆ°À» ³õÀ¸¸é, À¯´ÖÀ» ÇØ´ç À§Ä¡¿¡ ¹èÄ¡
+        // ë§ˆìš°ìŠ¤ ë²„íŠ¼ì„ ë†“ìœ¼ë©´, ìœ ë‹›ì„ í•´ë‹¹ ìœ„ì¹˜ì— ë°°ì¹˜
         if (selectedUnit != null && Input.GetMouseButtonUp(0))
         {
             PlaceUnit();
@@ -86,7 +86,7 @@ public class UnitManager : MonoBehaviour
             newPosition.y = selectedUnit.transform.position.y;
             selectedUnit.transform.position = newPosition;
 
-            // ±×¸®µå ¸Å´ÏÀú¸¦ ÅëÇØ ÇöÀç À§Ä¡°¡ À¯È¿ÇÑÁö È®ÀÎÇÏ°í, ÀÎµğÄÉÀÌÅÍ¸¦ ¾÷µ¥ÀÌÆ®
+            // ê·¸ë¦¬ë“œ ë§¤ë‹ˆì €ë¥¼ í†µí•´ í˜„ì¬ ìœ„ì¹˜ê°€ ìœ íš¨í•œì§€ í™•ì¸í•˜ê³ , ì¸ë””ì¼€ì´í„°ë¥¼ ì—…ë°ì´íŠ¸
             bool isValidPosition = gridManager.IsValidGridPosition(newPosition);
             gridManager.UpdateIndicator(newPosition, isValidPosition);
         }
@@ -111,27 +111,27 @@ public class UnitManager : MonoBehaviour
             Vector3 nearestGridPoint = gridManager.GetNearestGridPoint(selectedUnit.transform.position);
             if (gridManager.IsValidGridPosition(nearestGridPoint))
             {
-                gridManager.SetOccupied(initialUnitPosition, false); // ÀÌÀü À§Ä¡ÀÇ Á¡À¯ »óÅÂ ÇØÁ¦
+                gridManager.SetOccupied(initialUnitPosition, false); // ì´ì „ ìœ„ì¹˜ì˜ ì ìœ  ìƒíƒœ í•´ì œ
 
-                selectedUnit.transform.position = nearestGridPoint; // »õ À§Ä¡·Î ÀÌµ¿
+                selectedUnit.transform.position = nearestGridPoint; // ìƒˆ ìœ„ì¹˜ë¡œ ì´ë™
 
-                // ±×¸®µå ÀÎµ¦½º¸¦ ¼­¹ö Àü¼Û¿ë ÀüÅëÀûÀÎ 2Â÷¿ø ¹è¿­ ¹æ½ÄÀ¸·Î º¯È¯
+                // ê·¸ë¦¬ë“œ ì¸ë±ìŠ¤ë¥¼ ì„œë²„ ì „ì†¡ìš© ì „í†µì ì¸ 2ì°¨ì› ë°°ì—´ ë°©ì‹ìœ¼ë¡œ ë³€í™˜
                 int xIndex_server = Mathf.FloorToInt(nearestGridPoint.x + 3.5f);
                 int zIndex_server = 7 - Mathf.FloorToInt(nearestGridPoint.z + 3.5f);
 
-                Debug.Log("À¯´Ö[" + selectedUnit.name + "](ÀÌ)°¡ " + "xIndex: " + xIndex_server + ", zIndex: " + zIndex_server + "·Î ÀÌµ¿µÇ¾úÀ½");
+                Debug.Log("ìœ ë‹›[" + selectedUnit.name + "](ì´)ê°€ " + "xIndex: " + xIndex_server + ", zIndex: " + zIndex_server + "ë¡œ ì´ë™ë˜ì—ˆìŒ");
                 Unit unit = selectedUnit.GetComponent<Unit>();
-                if (unit != null) // À¯´Ö Á¤º¸ °ü¸®ÇÏ´Â ÄÄÆ÷³ÍÆ®ÀÇ ÁÂÇ¥°ª Àü¼Û
+                if (unit != null) // ìœ ë‹› ì •ë³´ ê´€ë¦¬í•˜ëŠ” ì»´í¬ë„ŒíŠ¸ì˜ ì¢Œí‘œê°’ ì „ì†¡
                 {
-                    unit.xIndex = xIndex_server;
-                    unit.zIndex = zIndex_server;
+                    unit.XIndex = xIndex_server;
+                    unit.ZIndex = zIndex_server;
                 }
 
-                gridManager.SetOccupied(nearestGridPoint, true); // »õ À§Ä¡ÀÇ Á¡À¯ »óÅÂ ¼³Á¤
+                gridManager.SetOccupied(nearestGridPoint, true); // ìƒˆ ìœ„ì¹˜ì˜ ì ìœ  ìƒíƒœ ì„¤ì •
             }
             else
             {
-                selectedUnit.transform.position = initialUnitPosition; // À¯È¿ÇÏÁö ¾ÊÀº À§Ä¡¸é ¿ø·¡ À§Ä¡·Î
+                selectedUnit.transform.position = initialUnitPosition; // ìœ íš¨í•˜ì§€ ì•Šì€ ìœ„ì¹˜ë©´ ì›ë˜ ìœ„ì¹˜ë¡œ
             }
         }
         
@@ -139,17 +139,17 @@ public class UnitManager : MonoBehaviour
         unitAnimator.SetBool("isRunning", false);
         selectedUnitOutlinable.OutlineParameters.Color = Color.green;
         selectedUnit = null;
-        gridManager.ResetIndicators(); // ¸ğµç ÀÎµğÄÉÀÌÅÍ ÃÊ±âÈ­
+        gridManager.ResetIndicators(); // ëª¨ë“  ì¸ë””ì¼€ì´í„° ì´ˆê¸°í™”
     }
 
     public void MoveUnit(Unit unit, int xIndex, int zIndex)
     {
-        Vector3 targetPosition = unit.transform.position; // º¯°æÇÒ À¯´Ö À§Ä¡
-        Vector3 initailTargetPosition = unit.transform.position; // À¯´ÖÀÇ ÃÊ±â À§Ä¡
-        targetPosition.x = (xIndex - 3.5f); // unit.csÀÇ º¯°æµÈ xIndexÀÇ ½ÇÁ¦ À§Ä¡·Î ¼¼ÆÃ
-        targetPosition.z = (7 - zIndex - 3.5f); // ¸¶Âù°¡Áö
+        Vector3 targetPosition = unit.transform.position; // ë³€ê²½í•  ìœ ë‹› ìœ„ì¹˜
+        Vector3 initailTargetPosition = unit.transform.position; // ìœ ë‹›ì˜ ì´ˆê¸° ìœ„ì¹˜
+        targetPosition.x = (xIndex - 3.5f); // unit.csì˜ ë³€ê²½ëœ xIndexì˜ ì‹¤ì œ ìœ„ì¹˜ë¡œ ì„¸íŒ…
+        targetPosition.z = (7 - zIndex - 3.5f); // ë§ˆì°¬ê°€ì§€
 
-        // ±×¸®µå ¹Ù±ùÀÌ¸é À¯´Ö ÆÇ¸Å
+        // ê·¸ë¦¬ë“œ ë°”ê¹¥ì´ë©´ ìœ ë‹› íŒë§¤
         if (IsOutsideGrid(targetPosition))
         {
             SellUnit(unit);
@@ -158,25 +158,25 @@ public class UnitManager : MonoBehaviour
         {
             if (gridManager.IsValidGridPosition(targetPosition))
             {
-                // ÀÌµ¿ °¡´ÉÇÏ¸é ½ÇÁ¦ À¯´Ö À§Ä¡ ¾÷µ¥ÀÌÆ®, DOTweenÀ» »ç¿ëÇÏ¿© »õ À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿
-                unit.transform.DOMove(targetPosition, 0.5f) // ÀÌµ¿ ½Ã°£ 0.5ÃÊ
-                    .SetEase(Ease.OutBack) // Bounce È¿°ú Àû¿ë
+                // ì´ë™ ê°€ëŠ¥í•˜ë©´ ì‹¤ì œ ìœ ë‹› ìœ„ì¹˜ ì—…ë°ì´íŠ¸, DOTweenì„ ì‚¬ìš©í•˜ì—¬ ìƒˆ ìœ„ì¹˜ë¡œ ë¶€ë“œëŸ½ê²Œ ì´ë™
+                unit.transform.DOMove(targetPosition, 0.5f) // ì´ë™ ì‹œê°„ 0.5ì´ˆ
+                    .SetEase(Ease.OutBack) // Bounce íš¨ê³¼ ì ìš©
                     .OnStart(() => {
-                        gridManager.SetOccupied(unit.transform.position, false); // ÇöÀç À§Ä¡ Á¡À¯ ÇØÁ¦
+                        gridManager.SetOccupied(unit.transform.position, false); // í˜„ì¬ ìœ„ì¹˜ ì ìœ  í•´ì œ
                     })
                     .OnComplete(() => {
-                        gridManager.SetOccupied(targetPosition, true); // »õ À§Ä¡ Á¡À¯
-                        unit.xIndex = xIndex;
-                        unit.zIndex = zIndex;
+                        gridManager.SetOccupied(targetPosition, true); // ìƒˆ ìœ„ì¹˜ ì ìœ 
+                        unit.XIndex = xIndex;
+                        unit.ZIndex = zIndex;
                     });
             }
             else
             {
-                // ÀÌ¹Ì Á¡À¯µÈ À§Ä¡¸é ·Î±× Ãâ·ÂÇÏ°í ¿ø·¡ À§Ä¡·Î
-                Debug.Log("ÀÌ¹Ì Á¡À¯µÈ À§Ä¡ÀÔ´Ï´Ù.");
+                // ì´ë¯¸ ì ìœ ëœ ìœ„ì¹˜ë©´ ë¡œê·¸ ì¶œë ¥í•˜ê³  ì›ë˜ ìœ„ì¹˜ë¡œ
+                Debug.Log("ì´ë¯¸ ì ìœ ëœ ìœ„ì¹˜ì…ë‹ˆë‹¤.");
                 unit.transform.position = initailTargetPosition;
-                unit.xIndex = unit.lastXIndex; // ÀÌÀü xIndex·Î º¹¿ø
-                unit.zIndex = unit.lastZIndex; // ÀÌÀü zIndex·Î º¹¿ø
+                unit.XIndex = unit.lastXIndex; // ì´ì „ xIndexë¡œ ë³µì›
+                unit.ZIndex = unit.lastZIndex; // ì´ì „ zIndexë¡œ ë³µì›
             }
         }
     }
@@ -184,26 +184,26 @@ public class UnitManager : MonoBehaviour
 
     private bool IsOutsideGrid(Vector3 position)
     {
-        // ±×¸®µå ¹Ù±ùÀÎÁö È®ÀÎ
+        // ê·¸ë¦¬ë“œ ë°”ê¹¥ì¸ì§€ í™•ì¸
         return !gridManager.IsValidGridPosition(position) && !gridManager.IsInGridBounds(position);
     }
 
-    // µå·¡±×·Î ¼±ÅÃÇÑ À¯´Ö ÆÇ¸Å
+    // ë“œë˜ê·¸ë¡œ ì„ íƒí•œ ìœ ë‹› íŒë§¤
     private void SellUnit()
     {
         Unit unit_info = selectedUnit.GetComponent<Unit>();
-        gameManager.UpdateGold(unit_info.price); // °ñµå Áõ°¡
-        Instantiate(sellPrefab, selectedUnit.transform.position, Quaternion.identity); // FX È¿°ú »ı¼º
-        Destroy(selectedUnit); // À¯´Ö Á¦°Å
+        gameManager.UpdateGold(unit_info.price); // ê³¨ë“œ ì¦ê°€
+        Instantiate(sellPrefab, selectedUnit.transform.position, Quaternion.identity); // FX íš¨ê³¼ ìƒì„±
+        Destroy(selectedUnit); // ìœ ë‹› ì œê±°
 
-        // È¿°úÀ½ Àç»ı
+        // íš¨ê³¼ìŒ ì¬ìƒ
         if (coinBlast != null)
         {
             coinBlast.Play();
         }
     }
 
-    // Æ¯Á¤ À¯´Ö ÆÇ¸Å
+    // íŠ¹ì • ìœ ë‹› íŒë§¤
     private void SellUnit(Unit unit)
     {
         gameManager.UpdateGold(unit.price);

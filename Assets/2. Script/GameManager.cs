@@ -6,26 +6,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼±¾ğ
+    public static GameManager instance; // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ ì„ ì–¸
 
-    public int gold = 10; // ÇÃ·¹ÀÌ¾îÀÇ ½ÃÀÛ °ñµå
-    public GameObject unitPrefab; // ±¸¸ÅÇÒ À¯´ÖÀÇ ÇÁ¸®ÆÕ
-    public GameObject uiPrefab; // À¯´Ö ui ÇÁ¸®ÆÕ
-    public TextMeshProUGUI goldText; // °ñµå¸¦ Ç¥½ÃÇÒ TextMeshProUGUI
+    public int gold = 10; // í”Œë ˆì´ì–´ì˜ ì‹œì‘ ê³¨ë“œ
+    public GameObject unitPrefab; // êµ¬ë§¤í•  ìœ ë‹›ì˜ í”„ë¦¬íŒ¹
+    public GameObject uiPrefab; // ìœ ë‹› ui í”„ë¦¬íŒ¹
+    public TextMeshProUGUI goldText; // ê³¨ë“œë¥¼ í‘œì‹œí•  TextMeshProUGUI
 
     private GridManager gridManager;
 
-    public static int unitIdCounter = 1; // À¯´Ö ID Ä«¿îÅÍ
+    public static int unitIdCounter = 1; // ìœ ë‹› ID ì¹´ìš´í„°
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // °ÔÀÓ¸Å´ÏÀú ÀÎ½ºÅÏ½º°¡ ¾À ·Îµå ½Ã¿¡µµ ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            DontDestroyOnLoad(gameObject); // ê²Œì„ë§¤ë‹ˆì € ì¸ìŠ¤í„´ìŠ¤ê°€ ì”¬ ë¡œë“œ ì‹œì—ë„ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
         }
         else
         {
-            Destroy(gameObject); // Áßº¹ ÀÎ½ºÅÏ½º°¡ »ı¼ºµÉ °æ¿ì ÆÄ±«
+            Destroy(gameObject); // ì¤‘ë³µ ì¸ìŠ¤í„´ìŠ¤ê°€ ìƒì„±ë  ê²½ìš° íŒŒê´´
         }
     }
 
@@ -35,81 +35,81 @@ public class GameManager : MonoBehaviour
         UpdateGoldUI();
     }
 
-    // °ñµå¸¦ Ãß°¡ÇÏ°Å³ª Â÷°¨ÇÏ´Â ÇÔ¼ö
+    // ê³¨ë“œë¥¼ ì¶”ê°€í•˜ê±°ë‚˜ ì°¨ê°í•˜ëŠ” í•¨ìˆ˜
     public void UpdateGold(int amount)
     {
         gold += amount;
         UpdateGoldUI();
     }
 
-    // °ñµå UI ¾÷µ¥ÀÌÆ®
+    // ê³¨ë“œ UI ì—…ë°ì´íŠ¸
     void UpdateGoldUI()
     {
         goldText.text = "Gold: " + gold;
     }
 
-    // À¯´Ö ±¸¸Å ÇÔ¼ö
+    // ìœ ë‹› êµ¬ë§¤ í•¨ìˆ˜
     public void BuyUnit()
     {
-        if (gold >= 2) // À¯´Ö ±¸¸Å ºñ¿ë Ã¼Å©
+        if (gold >= 2) // ìœ ë‹› êµ¬ë§¤ ë¹„ìš© ì²´í¬
         {
             Vector3 spawnPosition = GetRandomValidPosition();
 
-            // ±×¸®µå ÀÎµ¦½º¸¦ ¼­¹ö Àü¼Û¿ë ÀüÅëÀûÀÎ 2Â÷¿ø ¹è¿­ ¹æ½ÄÀ¸·Î º¯È¯
+            // ê·¸ë¦¬ë“œ ì¸ë±ìŠ¤ë¥¼ ì„œë²„ ì „ì†¡ìš© ì „í†µì ì¸ 2ì°¨ì› ë°°ì—´ ë°©ì‹ìœ¼ë¡œ ë³€í™˜
             int xIndex_server = Mathf.FloorToInt(spawnPosition.x + 3.5f);
             int zIndex_server = 7 - Mathf.FloorToInt(spawnPosition.z + 3.5f);
 
-            if (spawnPosition != Vector3.zero) // À¯È¿ÇÑ À§Ä¡ÀÎ °æ¿ì
+            if (spawnPosition != Vector3.zero) // ìœ íš¨í•œ ìœ„ì¹˜ì¸ ê²½ìš°
             {
-                // Y ÁÂÇ¥¿Í È¸Àü°ªÀ» Á¶Á¤
+                // Y ì¢Œí‘œì™€ íšŒì „ê°’ì„ ì¡°ì •
                 spawnPosition.y = 2.56f;
                 Quaternion spawnRotation = Quaternion.Euler(85, 0, 0);
 
                 GameObject newUnit = Instantiate(unitPrefab, spawnPosition, spawnRotation);
                 GameObject unitUI = Instantiate(uiPrefab, newUnit.transform);
 
-                Debug.Log("À¯´ÖÀÌ (" + xIndex_server + ", " + zIndex_server + ") ÁÂÇ¥¿¡ ¼ÒÈ¯µÊ");
+                Debug.Log("ìœ ë‹›ì´ (" + xIndex_server + ", " + zIndex_server + ") ì¢Œí‘œì— ì†Œí™˜ë¨");
 
                 Unit unit = newUnit.GetComponent<Unit>();
-                if (unit != null) // À¯´Ö Á¤º¸ °ü¸®ÇÏ´Â ÄÄÆ÷³ÍÆ®ÀÇ ÁÂÇ¥°ª Àü¼Û
+                if (unit != null) // ìœ ë‹› ì •ë³´ ê´€ë¦¬í•˜ëŠ” ì»´í¬ë„ŒíŠ¸ì˜ ì¢Œí‘œê°’ ì „ì†¡
                 {
                     unit.InitializeUnit(xIndex_server, zIndex_server);
                 }
 
                 unitUI.transform.localPosition = new Vector3(0, 0, 0);
-                newUnit.name = "Unit_" + unitIdCounter++; // À¯´Ö¿¡ °íÀ¯ ÀÌ¸§ ºÎ¿©
-                UpdateGold(-2); // °ñµå Â÷°¨
+                newUnit.name = "Unit_" + unitIdCounter++; // ìœ ë‹›ì— ê³ ìœ  ì´ë¦„ ë¶€ì—¬
+                UpdateGold(-2); // ê³¨ë“œ ì°¨ê°
 
-                // ±×¸®µå À§Ä¡ Á¡À¯
+                // ê·¸ë¦¬ë“œ ìœ„ì¹˜ ì ìœ 
                 gridManager.SetOccupied(spawnPosition, true);
             }
             else
             {
-                // À¯È¿ÇÑ À§Ä¡°¡ ¾ø´Â °æ¿ì ·Î±× ¸Ş½ÃÁö Ãâ·Â
-                Debug.Log("±¸¸Å ½ÇÆĞ: À¯È¿ÇÑ À§Ä¡°¡ Á¸ÀçÇÏÁö ¾ÊÀ½!");
+                // ìœ íš¨í•œ ìœ„ì¹˜ê°€ ì—†ëŠ” ê²½ìš° ë¡œê·¸ ë©”ì‹œì§€ ì¶œë ¥
+                Debug.Log("êµ¬ë§¤ ì‹¤íŒ¨: ìœ íš¨í•œ ìœ„ì¹˜ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŒ!");
             }
         }
         else
         {
-            // °ñµå°¡ ÃæºĞÇÏÁö ¾ÊÀº °æ¿ìÀÇ ·ÎÁ÷
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÏ´Ù!");
+            // ê³¨ë“œê°€ ì¶©ë¶„í•˜ì§€ ì•Šì€ ê²½ìš°ì˜ ë¡œì§
+            Debug.Log("ê³¨ë“œê°€ ë¶€ì¡±í•˜ë‹¤!");
         }
     }
 
-    // À¯È¿ÇÑ ·£´ı À§Ä¡ ¹İÈ¯ ÇÔ¼ö
+    // ìœ íš¨í•œ ëœë¤ ìœ„ì¹˜ ë°˜í™˜ í•¨ìˆ˜
     private Vector3 GetRandomValidPosition()
     {
-        // GridManager¸¦ ÅëÇØ ÀüÃ¼ ±×¸®µå¿¡¼­ À¯È¿ÇÑ À§Ä¡ Ã£±â
+        // GridManagerë¥¼ í†µí•´ ì „ì²´ ê·¸ë¦¬ë“œì—ì„œ ìœ íš¨í•œ ìœ„ì¹˜ ì°¾ê¸°
         Vector3[] validPositions = gridManager.GetValidPositions();
         if (validPositions.Length > 0)
         {
             int randomIndex = Random.Range(0, validPositions.Length);
             return validPositions[randomIndex];
         }
-        return Vector3.zero; // À¯È¿ÇÑ À§Ä¡°¡ ¾ø´Â °æ¿ì
+        return Vector3.zero; // ìœ íš¨í•œ ìœ„ì¹˜ê°€ ì—†ëŠ” ê²½ìš°
     }
 
-    // Æ¯¼º ±¸¸Å¸¦ À§ÇÑ ÇÔ¼ö
+    // íŠ¹ì„± êµ¬ë§¤ë¥¼ ìœ„í•œ í•¨ìˆ˜
     public void PurchaseSkill(SkillItem skill, Unit unit)
     {
         FindObjectOfType<SkillManager>().BuySkill(skill, unit);

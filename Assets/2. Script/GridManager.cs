@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    public GameObject gridTilePrefab; // ±×¸®µå Å¸ÀÏÀ» »ı¼ºÇÒ ÇÁ¸®ÆÕ
-    public int gridSizeX = 8; // ±×¸®µåÀÇ °¡·Î Å©±â
-    public int gridSizeZ = 8; // ±×¸®µåÀÇ ¼¼·Î Å©±â
-    public float tileSize = 1.0f; // Å¸ÀÏ ÇÏ³ªÀÇ Å©±â
+    public GameObject gridTilePrefab; // ê·¸ë¦¬ë“œ íƒ€ì¼ì„ ìƒì„±í•  í”„ë¦¬íŒ¹
+    public int gridSizeX = 8; // ê·¸ë¦¬ë“œì˜ ê°€ë¡œ í¬ê¸°
+    public int gridSizeZ = 8; // ê·¸ë¦¬ë“œì˜ ì„¸ë¡œ í¬ê¸°
+    public float tileSize = 1.0f; // íƒ€ì¼ í•˜ë‚˜ì˜ í¬ê¸°
 
-    private GameObject[,] gridTiles; // ±×¸®µå Å¸ÀÏÀ» ÀúÀåÇÒ ¹è¿­
-    private GameObject[,] indicatorTiles; // ÀÎµğÄÉÀÌÅÍ Å¸ÀÏÀ» ÀúÀåÇÒ ¹è¿­
-    private bool[,] isOccupied; // ÇØ´ç Å¸ÀÏÀÌ Á¡À¯µÇ¾ú´ÂÁö ¿©ºÎ¸¦ ÀúÀåÇÒ ¹è¿­
+    private GameObject[,] gridTiles; // ê·¸ë¦¬ë“œ íƒ€ì¼ì„ ì €ì¥í•  ë°°ì—´
+    private GameObject[,] indicatorTiles; // ì¸ë””ì¼€ì´í„° íƒ€ì¼ì„ ì €ì¥í•  ë°°ì—´
+    private bool[,] isOccupied; // í•´ë‹¹ íƒ€ì¼ì´ ì ìœ ë˜ì—ˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ì €ì¥í•  ë°°ì—´
 
-    public GameObject indicatorPrefab; // ÀÎµğÄÉÀÌÅÍ ÇÁ¸®ÆÕ
-    public Material indicatorValidMaterial; // À¯È¿ÇÑ ¹èÄ¡ À§Ä¡¸¦ Ç¥½ÃÇÒ ¶§ »ç¿ëÇÒ ¸ÓÆ¼¸®¾ó
-    public Material indicatorInvalidMaterial; // À¯È¿ÇÏÁö ¾ÊÀº ¹èÄ¡ À§Ä¡¸¦ Ç¥½ÃÇÒ ¶§ »ç¿ëÇÒ ¸ÓÆ¼¸®¾ó
+    public GameObject indicatorPrefab; // ì¸ë””ì¼€ì´í„° í”„ë¦¬íŒ¹
+    public Material indicatorValidMaterial; // ìœ íš¨í•œ ë°°ì¹˜ ìœ„ì¹˜ë¥¼ í‘œì‹œí•  ë•Œ ì‚¬ìš©í•  ë¨¸í‹°ë¦¬ì–¼
+    public Material indicatorInvalidMaterial; // ìœ íš¨í•˜ì§€ ì•Šì€ ë°°ì¹˜ ìœ„ì¹˜ë¥¼ í‘œì‹œí•  ë•Œ ì‚¬ìš©í•  ë¨¸í‹°ë¦¬ì–¼
 
     void Start()
     {
@@ -26,22 +26,22 @@ public class GridManager : MonoBehaviour
 
     private void CreateGrid()
     {
-        // ±×¸®µå¿Í Å¸ÀÏ ¹è¿­ ÃÊ±âÈ­
+        // ê·¸ë¦¬ë“œì™€ íƒ€ì¼ ë°°ì—´ ì´ˆê¸°í™”
         gridTiles = new GameObject[gridSizeX, gridSizeZ];
         indicatorTiles = new GameObject[gridSizeX, gridSizeZ];
         isOccupied = new bool[gridSizeX, gridSizeZ];
 
-        // ±×¸®µå Å¸ÀÏ »ı¼º
+        // ê·¸ë¦¬ë“œ íƒ€ì¼ ìƒì„±
         for (float x = -gridSizeX / 2; x < gridSizeX / 2; x++)
         {
             for (float z = -gridSizeZ / 2; z < gridSizeZ / 2; z++)
             {
-                // Å¸ÀÏÀÇ Áß½É À§Ä¡ °è»ê
+                // íƒ€ì¼ì˜ ì¤‘ì‹¬ ìœ„ì¹˜ ê³„ì‚°
                 Vector3 tilePosition = new Vector3(x * tileSize + tileSize / 2, 2, z * tileSize + tileSize / 2);
-                // Å¸ÀÏ ÀÎ½ºÅÏ½º »ı¼º
+                // íƒ€ì¼ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
                 GameObject gridTile = Instantiate(gridTilePrefab, tilePosition, Quaternion.identity);
                 gridTile.transform.localScale = new Vector3(tileSize, 1.0f, tileSize);
-                gridTile.transform.SetParent(transform); // ÇöÀç °´Ã¼ÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤
+                gridTile.transform.SetParent(transform); // í˜„ì¬ ê°ì²´ì˜ ìì‹ìœ¼ë¡œ ì„¤ì •
                 gridTiles[(int)(x + gridSizeX / 2), (int)(z + gridSizeZ / 2)] = gridTile;
             }
         }
@@ -49,16 +49,16 @@ public class GridManager : MonoBehaviour
 
     private void CreateIndicators()
     {
-        // ÀÎµğÄÉÀÌÅÍ Å¸ÀÏ »ı¼º
+        // ì¸ë””ì¼€ì´í„° íƒ€ì¼ ìƒì„±
         for (float x = -gridSizeX / 2; x < gridSizeX / 2; x++)
         {
             for (float z = -gridSizeZ / 2; z < gridSizeZ / 2; z++)
             {
-                // ÀÎµğÄÉÀÌÅÍ Å¸ÀÏ À§Ä¡ °è»ê (¾à°£ ³ô°Ô ¼³Á¤)
+                // ì¸ë””ì¼€ì´í„° íƒ€ì¼ ìœ„ì¹˜ ê³„ì‚° (ì•½ê°„ ë†’ê²Œ ì„¤ì •)
                 Vector3 tilePosition = new Vector3(x * tileSize + tileSize / 2, 2.5f, z * tileSize + tileSize / 2);
-                // ÀÎµğÄÉÀÌÅÍ Å¸ÀÏ ÀÎ½ºÅÏ½º »ı¼º
+                // ì¸ë””ì¼€ì´í„° íƒ€ì¼ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
                 GameObject indicatorTile = Instantiate(indicatorPrefab, tilePosition, Quaternion.identity, transform);
-                indicatorTile.SetActive(false); // ÃÊ±â¿¡´Â ºñÈ°¼ºÈ­
+                indicatorTile.SetActive(false); // ì´ˆê¸°ì—ëŠ” ë¹„í™œì„±í™”
                 indicatorTiles[(int)(x + gridSizeX / 2), (int)(z + gridSizeZ / 2)] = indicatorTile;
             }
         }
@@ -66,27 +66,27 @@ public class GridManager : MonoBehaviour
 
     public void UpdateIndicator(Vector3 position, bool valid)
     {
-        // À§Ä¡¿¡ °¡Àå °¡±î¿î ±×¸®µå ÀÎµ¦½º °è»ê
+        // ìœ„ì¹˜ì— ê°€ì¥ ê°€ê¹Œìš´ ê·¸ë¦¬ë“œ ì¸ë±ìŠ¤ ê³„ì‚°
         int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
         int zIndex = Mathf.FloorToInt((position.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
 
-        // ÀÎµ¦½º°¡ À¯È¿ÇÑ ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+        // ì¸ë±ìŠ¤ê°€ ìœ íš¨í•œ ë²”ìœ„ ë‚´ì— ìˆëŠ”ì§€ í™•ì¸
         if (xIndex >= 0 && xIndex < gridSizeX && zIndex >= 0 && zIndex < gridSizeZ)
         {
             ResetIndicators();
             GameObject indicatorTile = indicatorTiles[xIndex, zIndex];
             indicatorTile.SetActive(true);
-            // À¯È¿ÇÑ À§Ä¡¶ó¸é ÃÊ·Ï»ö, ¾Æ´Ï¸é »¡°£»öÀ¸·Î Ç¥½Ã
+            // ìœ íš¨í•œ ìœ„ì¹˜ë¼ë©´ ì´ˆë¡ìƒ‰, ì•„ë‹ˆë©´ ë¹¨ê°„ìƒ‰ìœ¼ë¡œ í‘œì‹œ
             indicatorTile.GetComponent<Renderer>().material = valid ? indicatorValidMaterial : indicatorInvalidMaterial;
         }
         else
         {
-            // ÀÎµ¦½º°¡ ¹üÀ§ ¹Û¿¡ ÀÖÀ¸¸é ÀÎµğÄÉÀÌÅÍ¸¦ ºñÈ°¼ºÈ­
+            // ì¸ë±ìŠ¤ê°€ ë²”ìœ„ ë°–ì— ìˆìœ¼ë©´ ì¸ë””ì¼€ì´í„°ë¥¼ ë¹„í™œì„±í™”
             ResetIndicators();
         }
     }
 
-    // ¸ğµç ÀÎµğÄÉÀÌÅÍ ºñÈ°¼ºÈ­
+    // ëª¨ë“  ì¸ë””ì¼€ì´í„° ë¹„í™œì„±í™”
     public void ResetIndicators()
     {
         foreach (GameObject indicatorTile in indicatorTiles)
@@ -98,40 +98,40 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    // À¯È¿ÇÑ ±×¸®µå À§Ä¡ÀÎÁö ÆÇº°
+    // ìœ íš¨í•œ ê·¸ë¦¬ë“œ ìœ„ì¹˜ì¸ì§€ íŒë³„
     public bool IsValidGridPosition(Vector3 position)
     {
         int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
         int zIndex = Mathf.FloorToInt((position.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
 
-        // ±×¸®µå ¹üÀ§ ¾È¿¡ ÀÖ´ÂÁö È®ÀÎ
+        // ê·¸ë¦¬ë“œ ë²”ìœ„ ì•ˆì— ìˆëŠ”ì§€ í™•ì¸
         bool isInGridRange = xIndex >= 0 && xIndex < gridSizeX && zIndex >= 0 && zIndex < gridSizeZ;
         if (!isInGridRange)
         {
             return false;
         }
 
-        // ¾Æ·¡ÂÊ ±×¸®µå ¿µ¿ª¿¡¸¸ À¯´ÖÀ» ³õÀ» ¼ö ÀÖ°Ô º¯°æ
+        // ì•„ë˜ìª½ ê·¸ë¦¬ë“œ ì˜ì—­ì—ë§Œ ìœ ë‹›ì„ ë†“ì„ ìˆ˜ ìˆê²Œ ë³€ê²½
         bool isLowerHalf = zIndex < gridSizeZ / 2;
 
-        // ÇØ´ç À§Ä¡°¡ Á¡À¯µÇÁö ¾Ê¾Ò´ÂÁö È®ÀÎ
+        // í•´ë‹¹ ìœ„ì¹˜ê°€ ì ìœ ë˜ì§€ ì•Šì•˜ëŠ”ì§€ í™•ì¸
         bool isNotOccupied = !isOccupied[xIndex, zIndex];
 
         return isLowerHalf && isNotOccupied;
     }
 
-    // ±×¸®µå ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+    // ê·¸ë¦¬ë“œ ë²”ìœ„ ë‚´ì— ìˆëŠ”ì§€ í™•ì¸
     public bool IsInGridBounds(Vector3 position)
     {
         int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
         int zIndex = Mathf.FloorToInt((position.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
 
-        // À§Ä¡°¡ ±×¸®µå °æ°è ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+        // ìœ„ì¹˜ê°€ ê·¸ë¦¬ë“œ ê²½ê³„ ë‚´ì— ìˆëŠ”ì§€ í™•ì¸
         return xIndex >= 0 && xIndex < gridSizeX && zIndex >= 0 && zIndex < gridSizeZ;
     }
 
 
-    // ±×¸®µå À§Ä¡ÀÇ Á¡À¯ »óÅÂ ¼³Á¤
+    // ê·¸ë¦¬ë“œ ìœ„ì¹˜ì˜ ì ìœ  ìƒíƒœ ì„¤ì •
     public void SetOccupied(Vector3 position, bool occupied)
     {
         int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
@@ -144,10 +144,10 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    // °¡Àå °¡±î¿î ±×¸®µå Æ÷ÀÎÆ® ¹İÈ¯
+    // ê°€ì¥ ê°€ê¹Œìš´ ê·¸ë¦¬ë“œ í¬ì¸íŠ¸ ë°˜í™˜
     public Vector3 GetNearestGridPoint(Vector3 position)
     {
-        // Áß½É À§Ä¡ °è»ê
+        // ì¤‘ì‹¬ ìœ„ì¹˜ ê³„ì‚°
         int xIndex = Mathf.FloorToInt((position.x - tileSize / 2 + gridSizeX * tileSize / 2) / tileSize);
         int zIndex = Mathf.FloorToInt((position.z - tileSize / 2 + gridSizeZ * tileSize / 2) / tileSize);
         Vector3 nearestPoint = new Vector3(xIndex * tileSize + tileSize / 2 - gridSizeX * tileSize / 2, position.y, zIndex * tileSize + tileSize / 2 - gridSizeZ * tileSize / 2);
@@ -157,7 +157,7 @@ public class GridManager : MonoBehaviour
         return nearestPoint;
     }
 
-    // À¯È¿ÇÑ À§Ä¡ ¹İÈ¯ ÇÔ¼ö
+    // ìœ íš¨í•œ ìœ„ì¹˜ ë°˜í™˜ í•¨ìˆ˜
     public Vector3[] GetValidPositions()
     {
         List<Vector3> validPositions = new List<Vector3>();

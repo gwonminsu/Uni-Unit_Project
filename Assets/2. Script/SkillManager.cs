@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
-    public List<SkillItem> availableSkills = new List<SkillItem>(); // ±¸¸Å °¡´ÉÇÑ ½ºÅ³ ¸ñ·Ï
-    private Dictionary<Unit, List<SkillItem>> unitSkills = new Dictionary<Unit, List<SkillItem>>(); // À¯´Öº° ½ºÅ³ ¸ñ·Ï
+    public List<SkillItem> availableSkills = new List<SkillItem>(); // êµ¬ë§¤ ê°€ëŠ¥í•œ ìŠ¤í‚¬ ëª©ë¡
+    private Dictionary<Unit, List<SkillItem>> unitSkills = new Dictionary<Unit, List<SkillItem>>(); // ìœ ë‹›ë³„ ìŠ¤í‚¬ ëª©ë¡
 
-    // ½ºÅ³ ±¸¸Å
+    // ìŠ¤í‚¬ êµ¬ë§¤
     public void BuySkill(SkillItem skill, Unit unit)
     {
         if (GameManager.instance.gold >= skill.cost)
         {
-            GameManager.instance.UpdateGold(-skill.cost); // °ñµå Â÷°¨
+            GameManager.instance.UpdateGold(-skill.cost); // ê³¨ë“œ ì°¨ê°
             if (!unitSkills.ContainsKey(unit))
             {
                 unitSkills[unit] = new List<SkillItem>();
@@ -21,11 +21,11 @@ public class SkillManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ê³¨ë“œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
         }
     }
 
-    // ½ºÅ³ È°¼ºÈ­
+    // ìŠ¤í‚¬ í™œì„±í™”
     public void ActivateSkill(Unit unit, SkillItem skill)
     {
         if (unitSkills.ContainsKey(unit) && unitSkills[unit].Contains(skill))
