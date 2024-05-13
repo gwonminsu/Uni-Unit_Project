@@ -15,6 +15,10 @@ public class Unit : MonoBehaviour
     [SerializeField] private int _xIndex; // 유닛의 현재 x좌표
     [SerializeField] private int _zIndex; // 유닛의 현재 z좌표
 
+    public SkillItem attackSkill;
+    public SkillItem moveSkill;
+    public SkillItem specialSkill;
+
     public TextMeshProUGUI attackText;
     public TextMeshProUGUI healthText;
 
@@ -26,6 +30,40 @@ public class Unit : MonoBehaviour
     public GameObject movementItem;
     public GameObject attackItem;
     public GameObject specialItem;
+
+    public void SetSkill(SkillItem skill, string slotType)
+    {
+        switch (slotType)
+        {
+            case "attack":
+                attackSkill = skill;
+                break;
+            case "move":
+                moveSkill = skill;
+                break;
+            case "special":
+                specialSkill = skill;
+                break;
+        }
+    }
+
+    public void ActivateSkill(string type)
+    {
+        SkillItem skillToActivate = null;
+        switch (type)
+        {
+            case "attack":
+                skillToActivate = attackSkill;
+                break;
+            case "move":
+                skillToActivate = moveSkill;
+                break;
+            case "special":
+                skillToActivate = specialSkill;
+                break;
+        }
+        skillToActivate?.Activate(this);
+    }
 
     public int Health
     {
@@ -121,6 +159,11 @@ public class Unit : MonoBehaviour
     }
 
     // 유닛의 행동을 정의하는 메서드들
+    public void UseSkill(SkillItem skill)
+    {
+        FindObjectOfType<SkillManager>().ActivateSkill(this, skill);
+    }
+
     public void Move()
     {
         // 이동 로직 구현

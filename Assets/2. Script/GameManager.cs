@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance; // 싱글톤 인스턴스 선언
+
     public int gold = 10; // 플레이어의 시작 골드
     public GameObject unitPrefab; // 구매할 유닛의 프리팹
     public GameObject uiPrefab; // 유닛 ui 프리팹
@@ -14,6 +16,18 @@ public class GameManager : MonoBehaviour
     private GridManager gridManager;
 
     public static int unitIdCounter = 1; // 유닛 ID 카운터
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // 게임매니저 인스턴스가 씬 로드 시에도 파괴되지 않도록 설정
+        }
+        else
+        {
+            Destroy(gameObject); // 중복 인스턴스가 생성될 경우 파괴
+        }
+    }
 
     void Start()
     {
@@ -93,5 +107,11 @@ public class GameManager : MonoBehaviour
             return validPositions[randomIndex];
         }
         return Vector3.zero; // 유효한 위치가 없는 경우
+    }
+
+    // 특성 구매를 위한 함수
+    public void PurchaseSkill(SkillItem skill, Unit unit)
+    {
+        FindObjectOfType<SkillManager>().BuySkill(skill, unit);
     }
 }
