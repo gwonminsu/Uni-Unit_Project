@@ -1637,9 +1637,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2117324615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -680, y: 461}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 280, y: -79}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &291883003
@@ -1662,10 +1662,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Gold: 10'
+  m_text: "\uACE8\uB4DC: 10"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dfc095ddd1545bb4388efc74ab48fc02, type: 2}
+  m_sharedMaterial: {fileID: -4012133300973777596, guid: dfc095ddd1545bb4388efc74ab48fc02,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3366,6 +3367,35 @@ MonoBehaviour:
     fillPass:
       shader: {fileID: 0}
       serializedProperties: []
+--- !u!114 &431718187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431718179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacfb1af70480a246878fd26096d09df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: BasicUnit
+  _health: 1
+  _attack: 1
+  price: 1
+  defence: 0
+  avoid: 0
+  current_state: idle
+  _xIndex: 0
+  _zIndex: 0
+  attackSkill: {fileID: 0}
+  moveSkill: {fileID: 0}
+  specialSkill: {fileID: 0}
+  attackText: {fileID: 0}
+  healthText: {fileID: 0}
+  movementItem: {fileID: 0}
+  attackItem: {fileID: 0}
+  specialItem: {fileID: 0}
 --- !u!1 &433183632
 GameObject:
   m_ObjectHideFlags: 0
@@ -3472,9 +3502,9 @@ RectTransform:
   - {fileID: 735982716}
   m_Father: {fileID: 2117324615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -712, y: 377}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 248, y: -163}
   m_SizeDelta: {x: 160, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &445948740
@@ -4629,6 +4659,35 @@ MonoBehaviour:
     fillPass:
       shader: {fileID: 0}
       serializedProperties: []
+--- !u!114 &520934873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520934861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacfb1af70480a246878fd26096d09df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: BasicUnit
+  _health: 1
+  _attack: 1
+  price: 1
+  defence: 0
+  avoid: 0
+  current_state: idle
+  _xIndex: 0
+  _zIndex: 0
+  attackSkill: {fileID: 0}
+  moveSkill: {fileID: 0}
+  specialSkill: {fileID: 0}
+  attackText: {fileID: 0}
+  healthText: {fileID: 0}
+  movementItem: {fileID: 0}
+  attackItem: {fileID: 0}
+  specialItem: {fileID: 0}
 --- !u!1 &527252888 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9113866513995472100, guid: 0103d37b832951941bae08881f626438,
@@ -5880,12 +5939,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Buy Unit
-
-    (2gold)'
+  m_text: "\uC720\uB2DB \uAD6C\uB9E4\n(2gold)"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dfc095ddd1545bb4388efc74ab48fc02, type: 2}
+  m_sharedMaterial: {fileID: -4012133300973777596, guid: dfc095ddd1545bb4388efc74ab48fc02,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8763,6 +8821,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 431718183}
+    - targetCorrespondingSourceObject: {fileID: 2203666439600223627, guid: 9fd48f50980567b4abd2cd58a374c5cf,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 431718187}
     - targetCorrespondingSourceObject: {fileID: 1015934950391890325, guid: 9fd48f50980567b4abd2cd58a374c5cf,
         type: 3}
       insertIndex: -1
@@ -9659,7 +9721,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6157206229185361926, guid: 0103d37b832951941bae08881f626438,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1184872432}
+    - targetCorrespondingSourceObject: {fileID: 6157206229185361926, guid: 0103d37b832951941bae08881f626438,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1184872427}
+    - targetCorrespondingSourceObject: {fileID: 6157206229185361926, guid: 0103d37b832951941bae08881f626438,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1184872431}
     - targetCorrespondingSourceObject: {fileID: 9113866513995472100, guid: 0103d37b832951941bae08881f626438,
         type: 3}
       insertIndex: -1
@@ -10530,6 +10600,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3932598942947494705, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 520934873}
     - targetCorrespondingSourceObject: {fileID: 3932598942947494705, guid: 63bd34c58bcab1c42b7ac9e895d6208a,
         type: 3}
       insertIndex: -1
@@ -11521,6 +11595,48 @@ MonoBehaviour:
     fillPass:
       shader: {fileID: 0}
       serializedProperties: []
+--- !u!114 &1184872431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184872423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096adee0eea98374f81eadfdc05dac24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableSkills: []
+--- !u!114 &1184872432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184872423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacfb1af70480a246878fd26096d09df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: BasicUnit
+  _health: 1
+  _attack: 1
+  price: 1
+  defence: 0
+  avoid: 0
+  current_state: idle
+  _xIndex: 0
+  _zIndex: 0
+  attackSkill: {fileID: 0}
+  moveSkill: {fileID: 0}
+  specialSkill: {fileID: 0}
+  attackText: {fileID: 0}
+  healthText: {fileID: 0}
+  movementItem: {fileID: 0}
+  attackItem: {fileID: 0}
+  specialItem: {fileID: 0}
 --- !u!1001 &1206450689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16385,8 +16501,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 291883002}
-  - {fileID: 445948739}
   - {fileID: 1539036568}
+  - {fileID: 445948739}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

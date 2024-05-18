@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     // 골드 UI 업데이트
     void UpdateGoldUI()
     {
-        goldText.text = "Gold: " + gold;
+        goldText.text = "골드: " + gold;
     }
 
     // 유닛 구매 함수
