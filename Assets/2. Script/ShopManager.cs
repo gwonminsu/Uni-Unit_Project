@@ -19,7 +19,7 @@ public class ShopManager : MonoBehaviour
 
     void PopulateShop()
     {
-        for (int i = 0; i < numberOfSlots; i++)
+/*        for (int i = 0; i < numberOfSlots; i++)
         {
             GameObject slot = Instantiate(shopItemPrefab, shopPanel);
             SkillSlot skillSlot = slot.GetComponent<SkillSlot>();
@@ -29,7 +29,7 @@ public class ShopManager : MonoBehaviour
                 skillSlot.SetSkillItem(randomItem); // 스킬 아이템 설정
                 slots.Add(slot);
             }
-        }
+        }*/
     }
 
     SkillItem GetRandomItem()
